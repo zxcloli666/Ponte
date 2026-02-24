@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111118"/>
+      <stop offset="100%" stop-color="#0a0a0f"/>
+    </linearGradient>
+    <linearGradient id="arc" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#6e8efb"/>
+      <stop offset="100%" stop-color="#a777e3"/>
+    </linearGradient>
+    <linearGradient id="dot1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6e8efb"/>
+      <stop offset="100%" stop-color="#5b7bf5"/>
+    </linearGradient>
+    <linearGradient id="dot2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#b07ce8"/>
+      <stop offset="100%" stop-color="#a777e3"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="512" height="512" rx="108" fill="url(#bg)"/>
+  <!-- Subtle glow -->
+  <ellipse cx="200" cy="280" rx="120" ry="80" fill="rgba(110,142,251,0.06)"/>
+  <ellipse cx="320" cy="260" rx="100" ry="70" fill="rgba(167,119,227,0.05)"/>
+  <!-- Bridge arc -->
+  <path d="M 130 310 Q 256 120 382 310" fill="none" stroke="url(#arc)" stroke-width="28" stroke-linecap="round"/>
+  <!-- Left dot (Android) -->
+  <circle cx="130" cy="310" r="40" fill="url(#dot1)"/>
+  <!-- Right dot (iOS) -->
+  <circle cx="382" cy="310" r="40" fill="url(#dot2)"/>
+  <!-- Signal pulses on arc -->
+  <circle cx="210" cy="218" r="8" fill="rgba(110,142,251,0.6)"/>
+  <circle cx="256" cy="195" r="10" fill="rgba(140,130,240,0.7)"/>
+  <circle cx="305" cy="215" r="8" fill="rgba(167,119,227,0.6)"/>
+</svg>

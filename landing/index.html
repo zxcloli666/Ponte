@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Ponte — мост между Android и iOS. SMS, звонки, контакты и уведомления на любом устройстве." />
+    <meta name="theme-color" content="#0a0a0f" />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png" />
+    <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+
+    <!-- PWA manifest — start_url points to the web app, not the landing page -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- iOS PWA meta — so "Add to Home Screen" works -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Ponte" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Ponte — Android to iOS Bridge" />
+    <meta property="og:description" content="SMS, звонки, контакты и уведомления с Android на iPhone через PWA." />
+    <meta property="og:image" content="/icons/icon-512.png" />
+
+    <title>Ponte — Android to iOS Bridge</title>
+
+    <!-- If opened in standalone mode (installed from Home Screen), redirect to the actual web app -->
+    <script>
+      if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone) {
+        window.location.replace("%VITE_APP_URL%");
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

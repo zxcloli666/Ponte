@@ -1,0 +1,82 @@
+/* ─── Ponte Landing · Design Tokens (matching web app) ──────────────────── */
+
+:root {
+  /* Typography */
+  --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    "SF Pro Text", system-ui, sans-serif;
+  --font-family-mono: "SF Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --font-size-caption: 0.75rem;
+  --font-size-body: 1rem;
+  --font-size-title3: 1.125rem;
+  --font-size-title2: 1.25rem;
+  --font-size-title: 1.5rem;
+  --font-size-large-title: 2rem;
+  --font-size-hero: clamp(2.5rem, 5vw, 4rem);
+  --font-size-display: clamp(3rem, 6vw, 5rem);
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+
+  /* Radius */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* Glass */
+  --glass-blur: 40px;
+  --glass-blur-sm: 20px;
+
+  /* Backgrounds */
+  --color-bg: #0a0a0f;
+  --color-bg-primary: #111118;
+  --color-bg-secondary: #1a1a24;
+
+  /* Glass surfaces */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-bg-hover: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-strong: rgba(255, 255, 255, 0.14);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  --glass-shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --glass-inner-glow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  /* Text */
+  --color-text-primary: rgba(255, 255, 255, 0.95);
+  --color-text-secondary: rgba(255, 255, 255, 0.55);
+  --color-text-tertiary: rgba(255, 255, 255, 0.35);
+
+  /* Accent */
+  --color-accent: #6e8efb;
+  --color-accent-secondary: #a777e3;
+  --gradient-accent: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);
+  --gradient-accent-vivid: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+  /* Semantic */
+  --color-success: #34d399;
+  --color-info: #818cf8;
+
+  /* Mesh gradient */
+  --mesh-gradient: radial-gradient(ellipse at 20% 50%, rgba(110, 142, 251, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(167, 119, 227, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(52, 211, 153, 0.04) 0%, transparent 50%);
+
+  /* Glow */
+  --glow-accent: 0 0 20px rgba(110, 142, 251, 0.3), 0 0 60px rgba(110, 142, 251, 0.1);
+}

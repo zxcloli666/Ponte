@@ -1,0 +1,44 @@
+/* ─── SegmentedControl · Glass ─────────────────────────────────────────────── */
+
+.container {
+  display: flex;
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur-sm));
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+}
+
+.indicator {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  background: var(--gradient-accent-subtle);
+  border: 1px solid rgba(110, 142, 251, 0.12);
+  border-radius: calc(var(--radius-sm) - 2px);
+  box-shadow: var(--glow-accent);
+}
+
+.segment {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  padding: 6px 12px;
+  font-size: var(--font-size-footnote);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-smooth);
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.segmentActive {
+  composes: segment;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}

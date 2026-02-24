@@ -1,0 +1,100 @@
+/* ─── TabBar · Floating Pill (Vision Pro) ─────────────────────────────────── */
+
+.wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  padding-bottom: calc(var(--safe-bottom, 0px) + var(--space-sm));
+  pointer-events: none;
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+  padding: var(--space-xs);
+  background: var(--glass-bg-solid);
+  backdrop-filter: blur(var(--glass-blur-lg));
+  -webkit-backdrop-filter: blur(var(--glass-blur-lg));
+  border: 1px solid var(--glass-border-strong);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--glass-shadow-lg), var(--glass-inner-glow);
+  pointer-events: auto;
+}
+
+.tab {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: var(--space-sm) var(--space-md);
+  min-width: 56px;
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background var(--duration-fast) var(--ease-smooth);
+  background: transparent;
+  border: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+.tab:hover {
+  background: var(--glass-bg-hover);
+}
+
+.tabActive {
+  composes: tab;
+  background: var(--glass-bg-active);
+}
+
+.tabActivePill {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-xl);
+  background: var(--gradient-accent-subtle);
+  border: 1px solid rgba(110, 142, 251, 0.15);
+  z-index: 0;
+}
+
+.tabIcon {
+  position: relative;
+  z-index: 1;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--color-text-secondary);
+}
+
+.tabIconActive {
+  composes: tabIcon;
+  color: var(--color-accent);
+}
+
+.tabLabel {
+  position: relative;
+  z-index: 1;
+  font-size: var(--font-size-caption2);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-secondary);
+  line-height: 1;
+}
+
+.tabLabelActive {
+  composes: tabLabel;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent);
+}
+
+.badgeWrapper {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  z-index: 2;
+}

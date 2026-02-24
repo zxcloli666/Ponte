@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ponte</string>
+
+    <!-- Pairing -->
+    <string name="pairing_title">Scan QR Code</string>
+    <string name="pairing_description">Open Ponte on your other device and scan the QR code displayed there.</string>
+    <string name="pairing_loading">Pairing&#8230;</string>
+    <string name="pairing_failed">Pairing failed</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_title">Ponte</string>
+    <string name="status_connected">Connected</string>
+    <string name="status_reconnecting">Reconnecting&#8230;</string>
+    <string name="status_disconnected">Disconnected</string>
+    <string name="sim_cards">SIM Cards</string>
+    <string name="no_sims">No SIM cards configured</string>
+    <string name="pending_sync">Pending Sync</string>
+    <string name="pending_messages">%d messages waiting to be sent</string>
+
+    <!-- SIM Settings -->
+    <string name="sim_settings_title">SIM Cards</string>
+    <string name="extra_numbers">Extra Numbers</string>
+    <string name="add_extra_number">Add Extra Number</string>
+    <string name="no_sims_detected">No SIM cards detected</string>
+
+    <!-- Notification Filters -->
+    <string name="notification_filters_title">Notification Filters</string>
+    <string name="search_apps">Search apps&#8230;</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="about">About</string>
+    <string name="disconnect">Disconnect &amp; Re-pair</string>
+    <string name="disconnect_confirm_title">Disconnect</string>
+    <string name="disconnect_confirm_message">Are you sure you want to disconnect? You will need to scan a QR code again to pair.</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Permissions -->
+    <string name="permission_sms">SMS Access</string>
+    <string name="permission_sms_desc">Required to read and receive SMS messages</string>
+    <string name="permission_calls">Call Log Access</string>
+    <string name="permission_calls_desc">Required to read call history</string>
+    <string name="permission_contacts">Contacts Access</string>
+    <string name="permission_contacts_desc">Required to sync contacts</string>
+    <string name="permission_camera">Camera Access</string>
+    <string name="permission_camera_desc">Required to scan QR code for pairing</string>
+    <string name="permission_notifications">Notification Access</string>
+    <string name="permission_notifications_desc">Required to forward notifications</string>
+    <string name="permission_phone">Phone Access</string>
+    <string name="permission_phone_desc">Required to detect SIM cards and phone numbers</string>
+    <string name="permission_grant">Grant</string>
+    <string name="permission_granted">Granted</string>
+
+    <!-- Service -->
+    <string name="sync_notification_title">Ponte</string>
+    <string name="sync_notification_connected">Sync active</string>
+    <string name="sync_notification_reconnecting">Reconnecting&#8230;</string>
+    <string name="sync_notification_disconnected">Disconnected</string>
+</resources>
