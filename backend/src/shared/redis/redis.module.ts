@@ -1,5 +1,5 @@
 import { Module, Global } from "@nestjs/common";
-import Redis from "ioredis";
+import {Redis} from "ioredis";
 
 export type RedisClient = Redis;
 
