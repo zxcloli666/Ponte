@@ -15,6 +15,7 @@ RUN deno compile \
     --allow-env \
     --allow-read \
     --allow-write \
+    --allow-sys \
     --output ponte-backend \
     src/main.ts
 RUN deno compile \
@@ -22,6 +23,7 @@ RUN deno compile \
     --allow-env \
     --allow-read \
     --allow-write \
+    --allow-sys \
     --output ponte-migrate \
     src/shared/database/migrate.ts
 
