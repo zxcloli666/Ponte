@@ -1,5 +1,6 @@
 # Stage 1: Cache dependencies
 FROM denoland/deno:latest AS cache
+RUN apt-get update && apt-get install -y nodejs npm && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY deno.json deno.lock* ./
 RUN deno install --allow-scripts=npm:@nestjs/core,npm:msgpackr-extract
