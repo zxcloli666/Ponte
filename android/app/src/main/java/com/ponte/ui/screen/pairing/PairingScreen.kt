@@ -175,6 +175,7 @@ fun PairingScreen(
     }
 }
 
+@OptIn(androidx.camera.core.ExperimentalGetImage::class)
 @Composable
 private fun QrCameraPreview(onQrScanned: (String) -> Unit) {
     val context = LocalContext.current
@@ -201,7 +202,6 @@ private fun QrCameraPreview(onQrScanned: (String) -> Unit) {
 
             val scanner = BarcodeScanning.getClient()
 
-            @androidx.camera.core.ExperimentalGetImage
             val imageAnalysis = ImageAnalysis.Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                 .build()
