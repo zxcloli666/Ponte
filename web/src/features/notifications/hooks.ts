@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useShallow } from "zustand/shallow";
-import { useNotificationsStore, type NotificationGroup } from "./store";
+import { type NotificationGroup, useNotificationsStore } from "./store";
 
 /**
  * Get notifications, optionally grouped by app.

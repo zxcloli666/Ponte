@@ -142,7 +142,7 @@ export class SmsController {
    * GET /sms/:id — Single message by ID.
    */
   @Get(":id")
-  async getMessage(
+  getMessage(
     @Param("id", ParseUUIDPipe) id: string,
   ) {
     return this.smsService.getMessageById(id);
@@ -152,7 +152,7 @@ export class SmsController {
    * DELETE /sms/:id — Delete a single message.
    */
   @Delete(":id")
-  async deleteMessage(
+  deleteMessage(
     @Param("id", ParseUUIDPipe) id: string,
   ) {
     return this.smsService.deleteMessage(id);

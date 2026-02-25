@@ -24,15 +24,14 @@ export function useAuth() {
  * Hook for pairing flow — returns pairing state and actions.
  */
 export function usePairingStatus() {
-  const { pairingToken, pairingStatus, setPairingToken, setPairingStatus } =
-    useAuthStore(
-      useShallow((s) => ({
-        pairingToken: s.pairingToken,
-        pairingStatus: s.pairingStatus,
-        setPairingToken: s.setPairingToken,
-        setPairingStatus: s.setPairingStatus,
-      })),
-    );
+  const { pairingToken, pairingStatus, setPairingToken, setPairingStatus } = useAuthStore(
+    useShallow((s) => ({
+      pairingToken: s.pairingToken,
+      pairingStatus: s.pairingStatus,
+      setPairingToken: s.setPairingToken,
+      setPairingStatus: s.setPairingStatus,
+    })),
+  );
 
   const resetPairing = useCallback(() => {
     setPairingStatus("idle");

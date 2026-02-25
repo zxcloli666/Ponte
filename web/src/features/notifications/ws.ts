@@ -1,6 +1,6 @@
-import type { Socket } from "socket.io-client";
-import { useNotificationsStore, type AppNotification } from "./store";
 import { setLastEventId } from "@/shared/api/ws";
+import type { Socket } from "socket.io-client";
+import { type AppNotification, useNotificationsStore } from "./store";
 
 /**
  * Register notification Socket.IO event handlers.

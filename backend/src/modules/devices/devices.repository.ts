@@ -20,7 +20,7 @@ export class DevicesRepository {
     return rows[0];
   }
 
-  async findByUserId(userId: string): Promise<Device[]> {
+  findByUserId(userId: string): Promise<Device[]> {
     return this.db
       .select()
       .from(devices)

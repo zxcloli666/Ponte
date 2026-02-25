@@ -66,7 +66,7 @@ export class NotificationsRepository {
   /**
    * Upsert a batch of notifications. Returns all upserted rows.
    */
-  async upsertBatch(items: InsertNotification[]) {
+  upsertBatch(items: InsertNotification[]) {
     if (items.length === 0) return [];
 
     return this.db
@@ -128,7 +128,7 @@ export class NotificationsRepository {
   /**
    * Get all notification filters for a device.
    */
-  async findFiltersByDevices(deviceIds: string[]) {
+  findFiltersByDevices(deviceIds: string[]) {
     return this.db
       .select()
       .from(notificationFilters)
@@ -191,7 +191,7 @@ export class NotificationsRepository {
    * List distinct apps (packageName + appName) from notification_filters for a device.
    * Used by the "apps" endpoint — returns all apps Android has synced.
    */
-  async findAppsByDevices(deviceIds: string[]) {
+  findAppsByDevices(deviceIds: string[]) {
     return this.db
       .select({
         packageName: notificationFilters.packageName,

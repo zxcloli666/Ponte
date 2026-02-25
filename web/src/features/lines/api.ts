@@ -1,5 +1,5 @@
 import { api } from "@/shared/api/client";
-import type { Sim, ExtraNumber } from "./store";
+import type { ExtraNumber, Sim } from "./store";
 
 interface SimWithExtras extends Sim {
   extraNumbers?: ExtraNumber[];
@@ -21,13 +21,9 @@ export async function loadLines(): Promise<{
 }> {
   const simsWithExtras = await getSims();
 
-  const sims: Sim[] = simsWithExtras.map(
-    ({ extraNumbers: _, ...sim }) => sim,
-  );
+  const sims: Sim[] = simsWithExtras.map(({ extraNumbers: _, ...sim }) => sim);
 
-  const extraNumbers: ExtraNumber[] = simsWithExtras.flatMap(
-    (sim) => sim.extraNumbers ?? [],
-  );
+  const extraNumbers: ExtraNumber[] = simsWithExtras.flatMap((sim) => sim.extraNumbers ?? []);
 
   return { sims, extraNumbers };
 }

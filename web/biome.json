@@ -37,6 +37,11 @@
       "trailingCommas": "all"
     }
   },
+  "css": {
+    "parser": {
+      "cssModules": true
+    }
+  },
   "files": {
     "ignore": ["node_modules", "dist", "*.config.ts"]
   }

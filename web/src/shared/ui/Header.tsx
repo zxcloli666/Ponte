@@ -1,4 +1,4 @@
-import { memo, type ReactNode } from "react";
+import { type ReactNode, memo } from "react";
 import styles from "./Header.module.css";
 
 interface HeaderProps {
@@ -24,16 +24,12 @@ export const Header = memo(function Header({
   transparent = false,
 }: HeaderProps) {
   return (
-    <header
-      className={transparent ? styles.headerTransparent : styles.headerGlass}
-    >
+    <header className={transparent ? styles.headerTransparent : styles.headerGlass}>
       {/* Standard header bar */}
       <div className={styles.bar}>
         <div className={styles.slotLeft}>{left}</div>
 
-        {!largeTitle && title && (
-          <h1 className={styles.titleCenter}>{title}</h1>
-        )}
+        {!largeTitle && title && <h1 className={styles.titleCenter}>{title}</h1>}
 
         <div className={styles.slotRight}>{right}</div>
       </div>

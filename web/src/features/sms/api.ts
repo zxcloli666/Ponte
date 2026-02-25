@@ -59,10 +59,7 @@ function mapConversation(raw: BackendConversation): Conversation {
   };
 }
 
-export async function getConversations(
-  offset = 0,
-  limit = 50,
-): Promise<{ items: Conversation[] }> {
+export async function getConversations(offset = 0, limit = 50): Promise<{ items: Conversation[] }> {
   const data = await api
     .get("sms/conversations", { searchParams: { offset, limit } })
     .json<BackendPaginatedResponse<BackendConversation>>();
@@ -113,7 +110,12 @@ export function sendSms(params: {
       reject(new Error("SMS send timeout"));
     }, 15_000);
 
-    const handler = (data: { tempId?: string; status: string; messageId?: string; error?: string }) => {
+    const handler = (data: {
+      tempId?: string;
+      status: string;
+      messageId?: string;
+      error?: string;
+    }) => {
       if (data.tempId !== params.tempId) return;
       socket.off("sms:send:ack", handler);
       clearTimeout(timeout);

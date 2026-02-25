@@ -1,13 +1,13 @@
-import { memo, useCallback, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Header } from "@/shared/ui/Header";
+import { api } from "@/shared/api/client";
 import { EmptyState } from "@/shared/ui/EmptyState";
+import { Header } from "@/shared/ui/Header";
 import { PullToRefresh } from "@/shared/ui/PullToRefresh";
 import { Spinner } from "@/shared/ui/Spinner";
 import { relativeTime } from "@/shared/utils/date";
+import { AnimatePresence, motion } from "framer-motion";
+import { memo, useCallback, useEffect } from "react";
 import { useNotifications } from "./hooks";
-import { useNotificationsStore, type AppNotification } from "./store";
-import { api } from "@/shared/api/client";
+import { type AppNotification, useNotificationsStore } from "./store";
 
 export default function NotificationsScreen() {
   const { grouped, isLoading, notifications } = useNotifications();
@@ -20,25 +20,37 @@ export default function NotificationsScreen() {
     (async () => {
       setLoading(true);
       try {
-        const d = await api.get("notifications", { searchParams: { page: 1, limit: 100 } }).json<{ items: AppNotification[] }>();
+        const d = await api
+          .get("notifications", { searchParams: { page: 1, limit: 100 } })
+          .json<{ items: AppNotification[] }>();
         if (!c) setNotifications(d.items);
-      } catch (e) { console.error("Load notifications failed:", e); }
-      finally { if (!c) setLoading(false); }
+      } catch (e) {
+        console.error("Load notifications failed:", e);
+      } finally {
+        if (!c) setLoading(false);
+      }
     })();
-    return () => { c = true; };
+    return () => {
+      c = true;
+    };
   }, [setNotifications, setLoading]);
 
   const handleRefresh = useCallback(async () => {
     try {
-      const d = await api.get("notifications", { searchParams: { page: 1, limit: 100 } }).json<{ items: AppNotification[] }>();
+      const d = await api
+        .get("notifications", { searchParams: { page: 1, limit: 100 } })
+        .json<{ items: AppNotification[] }>();
       setNotifications(d.items);
     } catch {}
   }, [setNotifications]);
 
-  const handleDismiss = useCallback((id: string) => {
-    removeNotification(id);
-    api.delete(`notifications/${id}`).catch(() => {});
-  }, [removeNotification]);
+  const handleDismiss = useCallback(
+    (id: string) => {
+      removeNotification(id);
+      api.delete(`notifications/${id}`).catch(() => {});
+    },
+    [removeNotification],
+  );
 
   return (
     <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
@@ -46,10 +58,25 @@ export default function NotificationsScreen() {
 
       <PullToRefresh onRefresh={handleRefresh}>
         {isLoading && notifications.length === 0 ? (
-          <div style={{ display: "flex", justifyContent: "center", padding: "var(--space-2xl)" }}><Spinner size={28} /></div>
+          <div style={{ display: "flex", justifyContent: "center", padding: "var(--space-2xl)" }}>
+            <Spinner size={28} />
+          </div>
         ) : notifications.length === 0 ? (
           <EmptyState
-            icon={<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 01-3.46 0" /></svg>}
+            icon={
+              <svg
+                aria-hidden="true"
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              >
+                <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                <path d="M13.73 21a2 2 0 01-3.46 0" />
+              </svg>
+            }
             title="Нет уведомлений"
             description="Уведомления с Android появятся здесь"
           />
@@ -59,26 +86,50 @@ export default function NotificationsScreen() {
               {grouped.map((group) => (
                 <div key={group.packageName} style={{ marginBottom: "var(--space-lg)" }}>
                   {/* App group header */}
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "var(--space-sm) var(--space-xs)" }}>
-                    <div style={{
-                      width: 22, height: 22, borderRadius: 6,
-                      background: "var(--glass-bg)", border: "1px solid var(--glass-border)",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      fontSize: 10, fontWeight: 700, color: "var(--color-text-secondary)",
-                    }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "var(--space-sm) var(--space-xs)",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: 22,
+                        height: 22,
+                        borderRadius: 6,
+                        background: "var(--glass-bg)",
+                        border: "1px solid var(--glass-border)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: 10,
+                        fontWeight: 700,
+                        color: "var(--color-text-secondary)",
+                      }}
+                    >
                       {(group.appName[0] ?? "?").toUpperCase()}
                     </div>
-                    <span style={{
-                      fontSize: "var(--font-size-caption)", fontWeight: 600,
-                      color: "var(--color-text-tertiary)",
-                      textTransform: "uppercase", letterSpacing: "0.06em",
-                    }}>
+                    <span
+                      style={{
+                        fontSize: "var(--font-size-caption)",
+                        fontWeight: 600,
+                        color: "var(--color-text-tertiary)",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.06em",
+                      }}
+                    >
                       {group.appName}
                     </span>
                   </div>
 
                   {group.notifications.map((notif) => (
-                    <NotificationItem key={notif.id} notification={notif} onDismiss={handleDismiss} />
+                    <NotificationItem
+                      key={notif.id}
+                      notification={notif}
+                      onDismiss={handleDismiss}
+                    />
                   ))}
                 </div>
               ))}
@@ -90,7 +141,10 @@ export default function NotificationsScreen() {
   );
 }
 
-const NotificationItem = memo(function NotificationItem({ notification, onDismiss }: { notification: AppNotification; onDismiss: (id: string) => void }) {
+const NotificationItem = memo(function NotificationItem({
+  notification,
+  onDismiss,
+}: { notification: AppNotification; onDismiss: (id: string) => void }) {
   return (
     <motion.div
       layout
@@ -100,7 +154,9 @@ const NotificationItem = memo(function NotificationItem({ notification, onDismis
       drag="x"
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={{ left: 0.5, right: 0 }}
-      onDragEnd={(_e, info) => { if (info.offset.x < -100) onDismiss(notification.id); }}
+      onDragEnd={(_e, info) => {
+        if (info.offset.x < -100) onDismiss(notification.id);
+      }}
       style={{
         background: "var(--glass-bg)",
         backdropFilter: "blur(var(--glass-blur))",
@@ -113,19 +169,46 @@ const NotificationItem = memo(function NotificationItem({ notification, onDismis
         boxShadow: "var(--glass-shadow)",
       }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 4 }}>
-        <p style={{ fontSize: "var(--font-size-subheadline)", fontWeight: 600, color: "var(--color-text-primary)", flex: 1 }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+          marginBottom: 4,
+        }}
+      >
+        <p
+          style={{
+            fontSize: "var(--font-size-subheadline)",
+            fontWeight: 600,
+            color: "var(--color-text-primary)",
+            flex: 1,
+          }}
+        >
           {notification.title}
         </p>
-        <span style={{ fontSize: "var(--font-size-caption2)", color: "var(--color-text-tertiary)", flexShrink: 0, marginLeft: 8 }}>
+        <span
+          style={{
+            fontSize: "var(--font-size-caption2)",
+            color: "var(--color-text-tertiary)",
+            flexShrink: 0,
+            marginLeft: 8,
+          }}
+        >
           {relativeTime(notification.postedAt)}
         </span>
       </div>
-      <p style={{
-        fontSize: "var(--font-size-subheadline)", color: "var(--color-text-secondary)",
-        lineHeight: "var(--line-height-normal)",
-        display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden",
-      }}>
+      <p
+        style={{
+          fontSize: "var(--font-size-subheadline)",
+          color: "var(--color-text-secondary)",
+          lineHeight: "var(--line-height-normal)",
+          display: "-webkit-box",
+          WebkitLineClamp: 3,
+          WebkitBoxOrient: "vertical",
+          overflow: "hidden",
+        }}
+      >
         {notification.body}
       </p>
     </motion.div>

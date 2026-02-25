@@ -20,9 +20,8 @@
   border-radius: var(--radius-full);
   box-shadow: var(--glass-inner-glow);
   outline: none;
-  transition:
-    border-color var(--duration-fast) var(--ease-smooth),
-    box-shadow var(--duration-fast) var(--ease-smooth);
+  transition: border-color var(--duration-fast) var(--ease-smooth), box-shadow var(--duration-fast)
+    var(--ease-smooth);
   -webkit-tap-highlight-color: transparent;
 }
 

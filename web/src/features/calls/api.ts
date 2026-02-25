@@ -41,10 +41,7 @@ function mapCall(raw: BackendCallRecord): CallRecord {
   };
 }
 
-export async function getCalls(
-  page = 1,
-  limit = 50,
-): Promise<{ items: CallRecord[] }> {
+export async function getCalls(page = 1, limit = 50): Promise<{ items: CallRecord[] }> {
   const data = await api
     .get("calls", { searchParams: { page, limit } })
     .json<PaginatedResponse<BackendCallRecord>>();

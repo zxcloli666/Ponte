@@ -12,7 +12,6 @@ import { WsGateway } from "../../shared/ws/ws.gateway.ts";
 import { AckService } from "../../shared/ws/ack.service.ts";
 import {
   notificationPushSchema,
-  type NotificationPushDto,
 } from "../../shared/types/index.ts";
 import { z } from "zod";
 

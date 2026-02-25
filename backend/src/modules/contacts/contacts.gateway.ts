@@ -114,7 +114,7 @@ export class ContactsGateway {
     });
 
     logger.debug(
-      { userId: payload.userId, ...payload },
+      payload,
       "contacts:updated emitted to iOS",
     );
   }

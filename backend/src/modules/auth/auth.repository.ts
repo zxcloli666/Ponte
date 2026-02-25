@@ -92,7 +92,7 @@ export class AuthRepository {
     return deleted ?? null;
   }
 
-  async deleteSessionsByUserId(userId: string) {
+  deleteSessionsByUserId(userId: string) {
     return this.db
       .delete(sessions)
       .where(eq(sessions.userId, userId))

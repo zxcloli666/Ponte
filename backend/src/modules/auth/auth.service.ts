@@ -8,9 +8,8 @@ import { randomBytes } from "node:crypto";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
-import Redis from "ioredis";
 import pino from "pino";
-import { REDIS } from "../../shared/redis/redis.module.ts";
+import { REDIS, type RedisClient } from "../../shared/redis/redis.module.ts";
 import { AuthRepository } from "./auth.repository.ts";
 import type { TokenPair, JwtClaims, PairRequestDto, RefreshRequestDto } from "../../shared/types/index.ts";
 
@@ -34,7 +33,7 @@ export class AuthService {
   private readonly jwtRefreshSecret: string;
 
   constructor(
-    @Inject(REDIS) private readonly redis: Redis,
+    @Inject(REDIS) private readonly redis: RedisClient,
     private readonly authRepository: AuthRepository,
   ) {
     this.jwtAccessSecret = Deno.env.get("JWT_ACCESS_SECRET") ?? "";
@@ -60,6 +59,7 @@ export class AuthService {
     accessToken: string;
     refreshToken: string;
     deviceSecret: string;
+    deviceId: string;
   }> {
     const key = `${PAIRING_TOKEN_PREFIX}${dto.pairingToken}`;
 

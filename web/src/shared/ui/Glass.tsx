@@ -1,5 +1,5 @@
-import { type ReactNode, forwardRef } from "react";
 import styles from "@/shared/styles/glass.module.css";
+import { type ReactNode, forwardRef } from "react";
 
 type GlassVariant = "card" | "surface" | "inset" | "bar" | "floating";
 type GlassPadding = "none" | "sm" | "md" | "lg";
@@ -45,7 +45,7 @@ export const Glass = forwardRef<HTMLElement, GlassProps>(function Glass(
   },
   ref,
 ) {
-  const base = hoverable ? styles.glassHover ?? "" : variantMap[variant];
+  const base = hoverable ? (styles.glassHover ?? "") : variantMap[variant];
   const pad = padding ? paddingMap[padding] : "";
 
   return (

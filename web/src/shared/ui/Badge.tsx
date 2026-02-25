@@ -24,16 +24,13 @@ export const Badge = memo(function Badge({
 
   let badgeClass: string;
   if (size === "sm") {
-    badgeClass = isWide ? styles.smWide ?? "" : styles.sm ?? "";
+    badgeClass = isWide ? (styles.smWide ?? "") : (styles.sm ?? "");
   } else {
-    badgeClass = isWide ? styles.mdWide ?? "" : styles.md ?? "";
+    badgeClass = isWide ? (styles.mdWide ?? "") : (styles.md ?? "");
   }
 
   return (
-    <span
-      className={`${badgeClass} ${className}`.trim()}
-      aria-label={`${count} unread`}
-    >
+    <span className={`${badgeClass} ${className}`.trim()} aria-label={`${count} unread`}>
       {displayCount}
     </span>
   );

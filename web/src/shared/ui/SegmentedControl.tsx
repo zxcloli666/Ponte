@@ -1,5 +1,5 @@
-import { memo, useCallback, useRef, type CSSProperties } from "react";
 import { motion } from "framer-motion";
+import { type CSSProperties, memo, useCallback, useRef } from "react";
 import styles from "./SegmentedControl.module.css";
 
 interface SegmentedControlProps<T extends string> {
@@ -55,9 +55,7 @@ function SegmentedControlInner<T extends string>({
           type="button"
           role="tab"
           aria-selected={option.value === value}
-          className={
-            option.value === value ? styles.segmentActive : styles.segment
-          }
+          className={option.value === value ? styles.segmentActive : styles.segment}
           onClick={() => handleClick(option.value)}
         >
           {option.label}
@@ -67,6 +65,4 @@ function SegmentedControlInner<T extends string>({
   );
 }
 
-export const SegmentedControl = memo(
-  SegmentedControlInner,
-) as typeof SegmentedControlInner;
+export const SegmentedControl = memo(SegmentedControlInner) as typeof SegmentedControlInner;

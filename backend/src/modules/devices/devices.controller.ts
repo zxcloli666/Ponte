@@ -25,6 +25,7 @@ export const CurrentUser = createParamDecorator(
 
 // ─── DTO ────────────────────────────────────────────────────────────────────
 
+// deno-lint-ignore no-unused-vars
 class UpdateDeviceDto {
   name?: string;
 }
@@ -41,7 +42,7 @@ export class DevicesController {
    * List all devices belonging to the authenticated user.
    */
   @Get()
-  async list(@CurrentUser() user: JwtPayload) {
+  list(@CurrentUser() user: JwtPayload) {
     return this.devicesService.findByUserId(user.sub);
   }
 
@@ -50,7 +51,7 @@ export class DevicesController {
    * Get a single device by ID. Enforces ownership.
    */
   @Get(":id")
-  async findOne(
+  findOne(
     @Param("id", ParseUUIDPipe) id: string,
     @CurrentUser() user: JwtPayload,
   ) {
@@ -62,7 +63,7 @@ export class DevicesController {
    * Update device name. Enforces ownership.
    */
   @Put(":id")
-  async update(
+  update(
     @Param("id", ParseUUIDPipe) id: string,
     @Body() dto: UpdateDeviceDto,
     @CurrentUser() user: JwtPayload,

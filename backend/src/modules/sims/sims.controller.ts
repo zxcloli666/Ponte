@@ -39,7 +39,7 @@ export class SimsController {
    * Works for both Android and iOS clients.
    */
   @Get()
-  async listSims(@Req() req: AuthenticatedRequest) {
+  listSims(@Req() req: AuthenticatedRequest) {
     return this.simsService.listSims(req.user.sub);
   }
 
@@ -50,7 +50,7 @@ export class SimsController {
    * Requires deviceId in JWT claims (Android-only endpoint).
    */
   @Post("sync")
-  async syncSims(
+  syncSims(
     @Req() req: AuthenticatedRequest,
     @Body() body: unknown,
   ) {
@@ -71,7 +71,7 @@ export class SimsController {
    * Update SIM display settings (name, color, displayNumber, isDefault).
    */
   @Put(":id")
-  async updateSim(
+  updateSim(
     @Req() req: AuthenticatedRequest,
     @Param("id", ParseUUIDPipe) id: string,
     @Body() body: unknown,
@@ -86,7 +86,7 @@ export class SimsController {
    * Create an extra number on a physical SIM.
    */
   @Post(":simId/extra-numbers")
-  async createExtraNumber(
+  createExtraNumber(
     @Req() req: AuthenticatedRequest,
     @Param("simId", ParseUUIDPipe) simId: string,
     @Body() body: unknown,

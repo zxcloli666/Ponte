@@ -207,7 +207,7 @@ export class SmsGateway implements OnModuleInit {
    */
   private async emitToIosWithAck(
     userId: string,
-    message: Record<string, unknown>,
+    message: unknown,
   ): Promise<void> {
     const targetRoom = `user:${userId}`;
 

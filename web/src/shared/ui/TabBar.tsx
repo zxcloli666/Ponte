@@ -1,8 +1,8 @@
-import { memo, type ReactNode } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { type ReactNode, memo } from "react";
 import { NavLink, useLocation } from "react-router";
-import { motion, AnimatePresence } from "framer-motion";
-import styles from "./TabBar.module.css";
 import { Badge } from "./Badge";
+import styles from "./TabBar.module.css";
 
 interface Tab {
   path: string;
@@ -80,9 +80,7 @@ const TabBarItem = memo(function TabBarItem({ tab }: { tab: Tab }) {
         )}
       </div>
 
-      <span className={active ? styles.tabLabelActive : styles.tabLabel}>
-        {tab.label}
-      </span>
+      <span className={active ? styles.tabLabelActive : styles.tabLabel}>{tab.label}</span>
     </NavLink>
   );
 });

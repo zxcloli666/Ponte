@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 type PairingStatus = "idle" | "pending" | "connected" | "error";
 
@@ -28,8 +28,7 @@ export const useAuthStore = create<AuthState>()(
       pairingStatus: "idle",
       deviceName: null,
 
-      setPairingToken: (token) =>
-        set({ pairingToken: token, pairingStatus: "pending" }),
+      setPairingToken: (token) => set({ pairingToken: token, pairingStatus: "pending" }),
 
       setPairingStatus: (status) => set({ pairingStatus: status }),
 
@@ -46,8 +45,7 @@ export const useAuthStore = create<AuthState>()(
         const { refreshToken } = get();
         if (!refreshToken) throw new Error("No refresh token");
 
-        const baseUrl =
-          import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
+        const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
         const res = await fetch(`${baseUrl}/auth/refresh`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },

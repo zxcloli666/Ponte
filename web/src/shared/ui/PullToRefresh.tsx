@@ -1,12 +1,6 @@
-import {
-  type ReactNode,
-  memo,
-  useCallback,
-  useRef,
-  useState,
-} from "react";
-import { Spinner } from "./Spinner";
+import { type ReactNode, memo, useCallback, useRef, useState } from "react";
 import styles from "./PullToRefresh.module.css";
+import { Spinner } from "./Spinner";
 
 interface PullToRefreshProps {
   onRefresh: () => Promise<void>;
@@ -82,9 +76,7 @@ export const PullToRefresh = memo(function PullToRefresh({
         <Spinner
           size={20}
           style={{
-            transform: isRefreshing
-              ? undefined
-              : `rotate(${(pullDistance / THRESHOLD) * 360}deg)`,
+            transform: isRefreshing ? undefined : `rotate(${(pullDistance / THRESHOLD) * 360}deg)`,
           }}
         />
       </div>

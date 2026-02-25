@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useShallow } from "zustand/shallow";
-import { useContactsStore, type Contact } from "./store";
+import { type Contact, useContactsStore } from "./store";
 
 interface ContactSection {
   letter: string;
@@ -24,9 +24,7 @@ export function useContacts() {
     if (!searchQuery) return contacts;
     const q = searchQuery.toLowerCase();
     return contacts.filter(
-      (c) =>
-        c.name.toLowerCase().includes(q) ||
-        c.phones.some((p) => p.number.includes(q)),
+      (c) => c.name.toLowerCase().includes(q) || c.phones.some((p) => p.number.includes(q)),
     );
   }, [contacts, searchQuery]);
 
@@ -48,10 +46,7 @@ export function useContacts() {
       .map(([letter, contacts]) => ({ letter, contacts }));
   }, [filtered]);
 
-  const alphabet = useMemo(
-    () => sections.map((s) => s.letter),
-    [sections],
-  );
+  const alphabet = useMemo(() => sections.map((s) => s.letter), [sections]);
 
   return {
     contacts: filtered,
@@ -74,11 +69,7 @@ export function useContactSearch(query: string) {
     if (!query || query.length < 2) return [];
     const q = query.toLowerCase();
     return contacts
-      .filter(
-        (c) =>
-          c.name.toLowerCase().includes(q) ||
-          c.phones.some((p) => p.number.includes(q)),
-      )
+      .filter((c) => c.name.toLowerCase().includes(q) || c.phones.some((p) => p.number.includes(q)))
       .slice(0, 10);
   }, [contacts, query]);
 }

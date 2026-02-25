@@ -1,13 +1,13 @@
+import { AnimatePresence, motion } from "framer-motion";
 import {
+  type ReactNode,
+  createContext,
   memo,
+  useCallback,
+  useContext,
   useEffect,
   useState,
-  useCallback,
-  createContext,
-  useContext,
-  type ReactNode,
 } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import styles from "./Toast.module.css";
 
 interface ToastData {
@@ -34,13 +34,10 @@ let toastId = 0;
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<ToastData[]>([]);
 
-  const show = useCallback(
-    (message: string, type: ToastData["type"] = "info", duration = 2500) => {
-      const id = `toast-${++toastId}`;
-      setToasts((prev) => [...prev, { id, message, type, duration }]);
-    },
-    [],
-  );
+  const show = useCallback((message: string, type: ToastData["type"] = "info", duration = 2500) => {
+    const id = `toast-${++toastId}`;
+    setToasts((prev) => [...prev, { id, message, type, duration }]);
+  }, []);
 
   const dismiss = useCallback((id: string) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));

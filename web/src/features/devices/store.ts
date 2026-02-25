@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 export interface Device {
   id: string;
@@ -29,7 +29,7 @@ export const useDevicesStore = create<DevicesState>()(
         const stillExists = devices.find((d) => d.id === current);
         set({
           devices,
-          activeDeviceId: stillExists ? current : devices[0]?.id ?? null,
+          activeDeviceId: stillExists ? current : (devices[0]?.id ?? null),
         });
       },
 

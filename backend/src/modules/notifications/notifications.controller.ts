@@ -59,7 +59,7 @@ export class NotificationsController {
   // ─── PUT /notifications/filters/:packageName ─────────────────────────────
 
   @Put("filters/:packageName")
-  async updateFilter(
+  updateFilter(
     @Req() req: { user: JwtPayload },
     @Param("packageName") packageName: string,
     @Body() body: unknown,
@@ -80,7 +80,7 @@ export class NotificationsController {
   // ─── DELETE /notifications/:id ───────────────────────────────────────────
 
   @Delete(":id")
-  async dismiss(@Param("id", ParseUUIDPipe) id: string) {
+  dismiss(@Param("id", ParseUUIDPipe) id: string) {
     return this.service.deleteNotification(id);
   }
 

@@ -1,4 +1,4 @@
-import { memo, type CSSProperties } from "react";
+import { type CSSProperties, memo } from "react";
 import styles from "./Spinner.module.css";
 
 interface SpinnerProps {
@@ -10,11 +10,7 @@ interface SpinnerProps {
 /**
  * Loading spinner with accent gradient stroke.
  */
-export const Spinner = memo(function Spinner({
-  size = 24,
-  className = "",
-  style,
-}: SpinnerProps) {
+export const Spinner = memo(function Spinner({ size = 24, className = "", style }: SpinnerProps) {
   return (
     <svg
       className={`${styles.spinner} ${className}`.trim()}
@@ -23,7 +19,7 @@ export const Spinner = memo(function Spinner({
       viewBox="0 0 24 24"
       fill="none"
       aria-label="Loading"
-      role="status"
+      role="img"
       style={style}
     >
       <defs>

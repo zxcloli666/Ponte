@@ -2,8 +2,8 @@
 
 :root {
   /* ── Typography ────────────────────────────────────────────────────────── */
-  --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-    "SF Pro Text", system-ui, sans-serif;
+  --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui,
+    sans-serif;
   --font-family-mono: "SF Mono", ui-monospace, SFMono-Regular, monospace;
 
   --font-size-caption2: 0.6875rem;
@@ -109,7 +109,11 @@
   --color-accent-secondary: #a777e3;
   --color-accent-light: rgba(110, 142, 251, 0.15);
   --gradient-accent: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);
-  --gradient-accent-subtle: linear-gradient(135deg, rgba(110, 142, 251, 0.2) 0%, rgba(167, 119, 227, 0.2) 100%);
+  --gradient-accent-subtle: linear-gradient(
+    135deg,
+    rgba(110, 142, 251, 0.2) 0%,
+    rgba(167, 119, 227, 0.2) 100%
+  );
   --gradient-accent-vivid: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 
   /* ── Semantic ──────────────────────────────────────────────────────────── */
@@ -129,8 +133,11 @@
   --color-bubble-outgoing-text: #ffffff;
 
   /* ── Mesh gradient background ──────────────────────────────────────────── */
-  --mesh-gradient: radial-gradient(ellipse at 20% 50%, rgba(110, 142, 251, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(167, 119, 227, 0.06) 0%, transparent 50%),
+  --mesh-gradient: radial-gradient(
+      ellipse at 20% 50%,
+      rgba(110, 142, 251, 0.08) 0%,
+      transparent 50%
+    ), radial-gradient(ellipse at 80% 20%, rgba(167, 119, 227, 0.06) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 80%, rgba(52, 211, 153, 0.04) 0%, transparent 50%);
 
   /* ── Glow effects ──────────────────────────────────────────────────────── */
@@ -172,7 +179,11 @@
   --color-accent-secondary: #9061d4;
   --color-accent-light: rgba(91, 109, 232, 0.1);
   --gradient-accent: linear-gradient(135deg, #5b6de8 0%, #9061d4 100%);
-  --gradient-accent-subtle: linear-gradient(135deg, rgba(91, 109, 232, 0.12) 0%, rgba(144, 97, 212, 0.12) 100%);
+  --gradient-accent-subtle: linear-gradient(
+    135deg,
+    rgba(91, 109, 232, 0.12) 0%,
+    rgba(144, 97, 212, 0.12) 100%
+  );
 
   --color-success: #10b981;
   --color-success-bg: rgba(16, 185, 129, 0.1);
@@ -231,7 +242,11 @@
     --color-accent-secondary: #9061d4;
     --color-accent-light: rgba(91, 109, 232, 0.1);
     --gradient-accent: linear-gradient(135deg, #5b6de8 0%, #9061d4 100%);
-    --gradient-accent-subtle: linear-gradient(135deg, rgba(91, 109, 232, 0.12) 0%, rgba(144, 97, 212, 0.12) 100%);
+    --gradient-accent-subtle: linear-gradient(
+      135deg,
+      rgba(91, 109, 232, 0.12) 0%,
+      rgba(144, 97, 212, 0.12) 100%
+    );
 
     --color-success: #10b981;
     --color-success-bg: rgba(16, 185, 129, 0.1);
@@ -247,8 +262,11 @@
     --color-bubble-outgoing: linear-gradient(135deg, #5b6de8, #9061d4);
     --color-bubble-outgoing-text: #ffffff;
 
-    --mesh-gradient: radial-gradient(ellipse at 20% 50%, rgba(91, 109, 232, 0.06) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 20%, rgba(144, 97, 212, 0.04) 0%, transparent 50%),
+    --mesh-gradient: radial-gradient(
+        ellipse at 20% 50%,
+        rgba(91, 109, 232, 0.06) 0%,
+        transparent 50%
+      ), radial-gradient(ellipse at 80% 20%, rgba(144, 97, 212, 0.04) 0%, transparent 50%),
       radial-gradient(ellipse at 50% 80%, rgba(16, 185, 129, 0.03) 0%, transparent 50%);
 
     --glow-accent: 0 0 20px rgba(91, 109, 232, 0.2), 0 0 60px rgba(91, 109, 232, 0.05);

@@ -1,4 +1,4 @@
-import { memo, type CSSProperties } from "react";
+import { type CSSProperties, memo } from "react";
 import styles from "./Avatar.module.css";
 
 interface AvatarProps {
@@ -21,15 +21,24 @@ function getInitials(name: string): string {
 
 function nameToColor(name: string): string {
   const colors = [
-    "#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4",
-    "#FFEAA7", "#DDA0DD", "#98D8C8", "#F7DC6F",
-    "#BB8FCE", "#85C1E9", "#82E0AA", "#F8C471",
+    "#FF6B6B",
+    "#4ECDC4",
+    "#45B7D1",
+    "#96CEB4",
+    "#FFEAA7",
+    "#DDA0DD",
+    "#98D8C8",
+    "#F7DC6F",
+    "#BB8FCE",
+    "#85C1E9",
+    "#82E0AA",
+    "#F8C471",
   ];
   let hash = 0;
   for (let i = 0; i < name.length; i++) {
     hash = name.charCodeAt(i) + ((hash << 5) - hash);
   }
-  return colors[Math.abs(hash) % colors.length] ?? colors[0]!;
+  return colors[Math.abs(hash) % colors.length] ?? "#85C1E9";
 }
 
 /**
@@ -57,16 +66,8 @@ export const Avatar = memo(function Avatar({
   };
 
   const avatarEl = photoUrl ? (
-    <div
-      className={`${styles.avatar} ${className}`}
-      style={{ ...sizeStyle, ...style }}
-    >
-      <img
-        src={photoUrl}
-        alt={displayName}
-        loading="lazy"
-        className={styles.avatarImage}
-      />
+    <div className={`${styles.avatar} ${className}`} style={{ ...sizeStyle, ...style }}>
+      <img src={photoUrl} alt={displayName} loading="lazy" className={styles.avatarImage} />
     </div>
   ) : (
     <div

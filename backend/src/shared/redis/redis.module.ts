@@ -1,6 +1,8 @@
 import { Module, Global } from "@nestjs/common";
 import Redis from "ioredis";
 
+export type RedisClient = InstanceType<typeof Redis>;
+
 export const REDIS = Symbol("REDIS");
 
 @Global()
@@ -8,7 +10,7 @@ export const REDIS = Symbol("REDIS");
   providers: [
     {
       provide: REDIS,
-      useFactory: (): Redis => {
+      useFactory: (): RedisClient => {
         const url = Deno.env.get("REDIS_URL") ?? "redis://localhost:6379";
         return new Redis(url, {
           maxRetriesPerRequest: null,

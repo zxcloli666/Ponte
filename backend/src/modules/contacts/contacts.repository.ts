@@ -160,7 +160,7 @@ export class ContactsRepository {
    * Get all non-deleted android IDs for a device.
    * Used during full sync to determine which contacts to soft-delete.
    */
-  async findActiveAndroidIdsByDeviceId(
+  findActiveAndroidIdsByDeviceId(
     deviceId: string,
   ): Promise<{ id: string; androidId: string }[]> {
     return this.db

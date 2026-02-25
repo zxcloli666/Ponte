@@ -85,9 +85,7 @@ export const useSmsStore = create<SmsState>()((set, get) => ({
       : [...addressMsgs, message.id];
 
     // Update conversations
-    const existingConv = state.conversations.find(
-      (c) => c.address === message.address,
-    );
+    const existingConv = state.conversations.find((c) => c.address === message.address);
     let conversations: Conversation[];
 
     if (existingConv) {
@@ -96,10 +94,7 @@ export const useSmsStore = create<SmsState>()((set, get) => ({
           ? {
               ...c,
               lastMessage: message,
-              unreadCount:
-                message.direction === "incoming"
-                  ? c.unreadCount + 1
-                  : c.unreadCount,
+              unreadCount: message.direction === "incoming" ? c.unreadCount + 1 : c.unreadCount,
               simId: message.simId,
               extraNumberId: message.extraNumberId,
             }
@@ -124,8 +119,7 @@ export const useSmsStore = create<SmsState>()((set, get) => ({
     // Sort by latest message
     conversations.sort(
       (a, b) =>
-        new Date(b.lastMessage.createdAt).getTime() -
-        new Date(a.lastMessage.createdAt).getTime(),
+        new Date(b.lastMessage.createdAt).getTime() - new Date(a.lastMessage.createdAt).getTime(),
     );
 
     set({

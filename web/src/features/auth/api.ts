@@ -21,12 +21,8 @@ export async function fetchQrToken(): Promise<QrTokenResponse> {
 /**
  * Poll the pairing status for a given token.
  */
-export async function checkPairingStatus(
-  pairingToken: string,
-): Promise<PairingStatusResponse> {
-  return api
-    .get(`auth/pairing-status/${pairingToken}`)
-    .json<PairingStatusResponse>();
+export async function checkPairingStatus(pairingToken: string): Promise<PairingStatusResponse> {
+  return api.get(`auth/pairing-status/${pairingToken}`).json<PairingStatusResponse>();
 }
 
 /**

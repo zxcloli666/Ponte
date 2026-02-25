@@ -7,7 +7,7 @@ import {
   MessageBody,
   ConnectedSocket,
 } from "@nestjs/websockets";
-import { Injectable, Inject } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import type { Server, Socket } from "socket.io";
 import jwt from "jsonwebtoken";
 import pino from "pino";

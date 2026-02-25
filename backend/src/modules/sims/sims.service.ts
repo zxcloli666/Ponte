@@ -30,7 +30,7 @@ export class SimsService {
   /**
    * List all physical SIMs (with nested extra numbers) for the current user.
    */
-  async listSims(userId: string) {
+  listSims(userId: string) {
     return this.simsRepository.findSimsByUserId(userId);
   }
 
@@ -228,14 +228,14 @@ export class SimsService {
   /**
    * Get a SIM by ID (with extra numbers). Useful for enriching SMS/Call data.
    */
-  async getSimById(simId: string) {
+  getSimById(simId: string) {
     return this.simsRepository.findSimById(simId);
   }
 
   /**
    * Get an extra number by ID. Useful for enriching SMS/Call data.
    */
-  async getExtraNumberById(extraNumberId: string) {
+  getExtraNumberById(extraNumberId: string) {
     return this.simsRepository.findExtraNumberById(extraNumberId);
   }
 

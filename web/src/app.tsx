@@ -1,19 +1,19 @@
-import { useEffect } from "react";
-import { RouterProvider } from "react-router";
-import { AnimatePresence } from "framer-motion";
-import { ToastProvider } from "@/shared/ui/Toast";
 import { useAuthStore } from "@/features/auth/store";
-import { useLinesStore } from "@/features/lines/store";
-import { useDevicesStore } from "@/features/devices/store";
-import { connectSocket, disconnectSocket } from "@/shared/api/ws";
-import { registerSmsHandlers } from "@/features/sms/ws";
-import { registerCallHandlers } from "@/features/calls/ws";
-import { registerNotificationHandlers } from "@/features/notifications/ws";
-import { loadLines } from "@/features/lines/api";
-import { getDevices } from "@/features/devices/api";
-import { router } from "@/router";
 import ActiveCallScreen from "@/features/calls/ActiveCallScreen";
 import { useCallsStore } from "@/features/calls/store";
+import { registerCallHandlers } from "@/features/calls/ws";
+import { getDevices } from "@/features/devices/api";
+import { useDevicesStore } from "@/features/devices/store";
+import { loadLines } from "@/features/lines/api";
+import { useLinesStore } from "@/features/lines/store";
+import { registerNotificationHandlers } from "@/features/notifications/ws";
+import { registerSmsHandlers } from "@/features/sms/ws";
+import { router } from "@/router";
+import { connectSocket, disconnectSocket } from "@/shared/api/ws";
+import { ToastProvider } from "@/shared/ui/Toast";
+import { AnimatePresence } from "framer-motion";
+import { useEffect } from "react";
+import { RouterProvider } from "react-router";
 
 /**
  * Root application component.
@@ -47,10 +47,7 @@ export function App() {
 
     async function loadData() {
       try {
-        const [devices, linesData] = await Promise.all([
-          getDevices(),
-          loadLines(),
-        ]);
+        const [devices, linesData] = await Promise.all([getDevices(), loadLines()]);
 
         useDevicesStore.getState().setDevices(devices);
         useLinesStore.getState().setSims(linesData.sims);
@@ -68,10 +65,7 @@ export function App() {
     const mql = window.matchMedia("(prefers-color-scheme: dark)");
 
     const apply = () => {
-      document.documentElement.setAttribute(
-        "data-theme",
-        mql.matches ? "dark" : "light",
-      );
+      document.documentElement.setAttribute("data-theme", mql.matches ? "dark" : "light");
     };
 
     apply();
@@ -88,10 +82,9 @@ export function App() {
         {activeCall &&
           (activeCall.status === "active" ||
             activeCall.status === "connecting" ||
-            (activeCall.status === "ringing" &&
-              activeCall.direction === "incoming")) && (
-          <ActiveCallScreen />
-        )}
+            (activeCall.status === "ringing" && activeCall.direction === "incoming")) && (
+            <ActiveCallScreen />
+          )}
       </AnimatePresence>
     </ToastProvider>
   );

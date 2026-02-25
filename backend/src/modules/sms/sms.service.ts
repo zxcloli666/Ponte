@@ -282,7 +282,7 @@ export class SmsService {
   /**
    * Get all undelivered messages for reconnect sync.
    */
-  async getUndelivered(deviceId: string): Promise<MessageWithRelations[]> {
+  getUndelivered(deviceId: string): Promise<MessageWithRelations[]> {
     return this.smsRepository.getUndelivered(deviceId);
   }
 }

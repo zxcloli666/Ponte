@@ -1,6 +1,5 @@
 import { Injectable, Inject } from "@nestjs/common";
 import { eq, and, desc, sql, inArray, type SQL } from "drizzle-orm";
-import { devices } from "../../shared/database/schema.ts";
 import { DRIZZLE, type DrizzleDB } from "../../shared/database/database.module.ts";
 import {
   messages,

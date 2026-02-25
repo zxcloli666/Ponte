@@ -11,10 +11,9 @@
 
 .glassHover {
   composes: glass;
-  transition:
-    background var(--duration-normal) var(--ease-smooth),
-    box-shadow var(--duration-normal) var(--ease-smooth),
-    border-color var(--duration-normal) var(--ease-smooth);
+  transition: background var(--duration-normal) var(--ease-smooth), box-shadow
+    var(--duration-normal) var(--ease-smooth), border-color var(--duration-normal)
+    var(--ease-smooth);
 }
 
 .glassHover:hover {

@@ -1,8 +1,8 @@
-import { lazy, Suspense } from "react";
+import { useAuthStore } from "@/features/auth/store";
+import { Spinner } from "@/shared/ui/Spinner";
+import { Suspense, lazy } from "react";
 import { Navigate, Outlet, type RouteObject } from "react-router";
 import { Layout } from "./layout";
-import { Spinner } from "@/shared/ui/Spinner";
-import { useAuthStore } from "@/features/auth/store";
 
 /** Lazy-loaded screens for code splitting */
 const PairingScreen = lazy(() => import("@/features/auth/PairingScreen"));

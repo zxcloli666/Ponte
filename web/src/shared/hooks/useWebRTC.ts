@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from "react";
 import { getSocket } from "@/shared/api/ws";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface WebRTCState {
   localStream: MediaStream | null;
@@ -10,10 +10,7 @@ interface WebRTCState {
 }
 
 const ICE_SERVERS: RTCConfiguration = {
-  iceServers: [
-    { urls: "stun:stun.l.google.com:19302" },
-    { urls: "stun:stun1.l.google.com:19302" },
-  ],
+  iceServers: [{ urls: "stun:stun.l.google.com:19302" }, { urls: "stun:stun1.l.google.com:19302" }],
 };
 
 /**
@@ -54,8 +51,7 @@ export function useWebRTC(callId: string | null) {
     };
 
     pc.onconnectionstatechange = () => {
-      const connected =
-        pc.connectionState === "connected" || pc.iceConnectionState === "connected";
+      const connected = pc.connectionState === "connected" || pc.iceConnectionState === "connected";
       setState((prev) => ({ ...prev, isConnected: connected }));
     };
 
@@ -78,7 +74,9 @@ export function useWebRTC(callId: string | null) {
       setState((prev) => ({ ...prev, localStream: stream }));
 
       const pc = createPeerConnection();
-      stream.getTracks().forEach((track) => pc.addTrack(track, stream));
+      for (const track of stream.getTracks()) {
+        pc.addTrack(track, stream);
+      }
 
       // Listen for remote offer
       socket.on("call:offer", async (data: { sdp: RTCSessionDescriptionInit }) => {
@@ -107,7 +105,11 @@ export function useWebRTC(callId: string | null) {
     socket?.off("call:offer");
     socket?.off("call:ice-candidate");
 
-    localStreamRef.current?.getTracks().forEach((track) => track.stop());
+    if (localStreamRef.current) {
+      for (const track of localStreamRef.current.getTracks()) {
+        track.stop();
+      }
+    }
     localStreamRef.current = null;
 
     pcRef.current?.close();

@@ -1,4 +1,4 @@
-import { memo, type ReactNode } from "react";
+import { type ReactNode, memo } from "react";
 import styles from "./EmptyState.module.css";
 
 interface EmptyStateProps {

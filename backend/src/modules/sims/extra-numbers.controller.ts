@@ -37,7 +37,7 @@ export class ExtraNumbersController {
    * Update an extra number.
    */
   @Put(":id")
-  async updateExtraNumber(
+  updateExtraNumber(
     @Req() req: AuthenticatedRequest,
     @Param("id", ParseUUIDPipe) id: string,
     @Body() body: unknown,

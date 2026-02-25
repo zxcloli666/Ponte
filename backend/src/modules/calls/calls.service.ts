@@ -283,7 +283,7 @@ export class CallsService {
 
   // ─── REST: Call History ─────────────────────────────────────────────────
 
-  async getCallHistory(
+  getCallHistory(
     userId: string,
     pagination: PaginationDto,
     filters: { direction?: string; simId?: string; extraNumberId?: string },
@@ -291,7 +291,7 @@ export class CallsService {
     return this.callsRepository.findPaginated(userId, pagination, filters);
   }
 
-  async getCallById(callId: string, userId: string): Promise<CallRow | null> {
+  getCallById(callId: string, userId: string): Promise<CallRow | null> {
     return this.callsRepository.findById(callId, userId);
   }
 

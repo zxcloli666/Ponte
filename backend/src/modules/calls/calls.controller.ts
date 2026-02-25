@@ -24,7 +24,7 @@ export class CallsController {
   constructor(private readonly callsService: CallsService) {}
 
   @Get()
-  async getCallHistory(
+  getCallHistory(
     @Req() req: { user: JwtPayload },
     @Query() query: Record<string, string>,
   ) {

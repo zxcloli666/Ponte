@@ -1,4 +1,4 @@
-import { Module, Global, type OnModuleDestroy } from "@nestjs/common";
+import { Module, Global } from "@nestjs/common";
 import { drizzle, type PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import * as schema from "./schema.ts";

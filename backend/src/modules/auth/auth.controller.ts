@@ -21,19 +21,19 @@ export class AuthController {
 
   /** Create a pairing token for QR display on iOS PWA. */
   @Get("qr")
-  async createQrToken() {
+  createQrToken() {
     return this.authService.createPairingToken();
   }
 
   /** Poll pairing status (used by web client). */
   @Get("pairing-status/:token")
-  async pairingStatus(@Param("token") token: string) {
+  pairingStatus(@Param("token") token: string) {
     return this.authService.getPairingStatus(token);
   }
 
   /** Android scans QR, sends pairing token + device info. */
   @Post("pair")
-  async pair(@Body() body: unknown) {
+  pair(@Body() body: unknown) {
     const parsed = pairRequestSchema.safeParse(body);
     if (!parsed.success) {
       throw new BadRequestException(parsed.error.flatten().fieldErrors);
@@ -43,7 +43,7 @@ export class AuthController {
 
   /** Rotate refresh token, issue new JWT pair. */
   @Post("refresh")
-  async refresh(@Body() body: unknown) {
+  refresh(@Body() body: unknown) {
     const parsed = refreshRequestSchema.safeParse(body);
     if (!parsed.success) {
       throw new BadRequestException(parsed.error.flatten().fieldErrors);

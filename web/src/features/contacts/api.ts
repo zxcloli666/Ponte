@@ -12,10 +12,7 @@ interface PaginatedResponse<T> {
 /**
  * Fetch all contacts (auto-paginates to get everything).
  */
-export async function getContacts(
-  page = 1,
-  limit = 100,
-): Promise<PaginatedResponse<Contact>> {
+export async function getContacts(page = 1, limit = 100): Promise<PaginatedResponse<Contact>> {
   const first = await api
     .get("contacts", { searchParams: { page, limit } })
     .json<PaginatedResponse<Contact>>();
@@ -40,11 +37,6 @@ export async function getContacts(
 /**
  * Search contacts by query.
  */
-export async function searchContacts(
-  query: string,
-  limit = 20,
-): Promise<Contact[]> {
-  return api
-    .get("contacts/search", { searchParams: { q: query, limit } })
-    .json<Contact[]>();
+export async function searchContacts(query: string, limit = 20): Promise<Contact[]> {
+  return api.get("contacts/search", { searchParams: { q: query, limit } }).json<Contact[]>();
 }

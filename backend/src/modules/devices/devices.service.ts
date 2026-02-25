@@ -12,14 +12,14 @@ export class DevicesService {
   /**
    * Create a new device. Used internally by the auth module during pairing.
    */
-  async create(data: DeviceInsert): Promise<Device> {
+  create(data: DeviceInsert): Promise<Device> {
     return this.devicesRepository.create(data);
   }
 
   /**
    * List all devices belonging to a user.
    */
-  async findByUserId(userId: string): Promise<Device[]> {
+  findByUserId(userId: string): Promise<Device[]> {
     return this.devicesRepository.findByUserId(userId);
   }
 
@@ -43,7 +43,7 @@ export class DevicesService {
   /**
    * Find device by ID without ownership check. Used internally by other modules.
    */
-  async findById(deviceId: string): Promise<Device | undefined> {
+  findById(deviceId: string): Promise<Device | undefined> {
     return this.devicesRepository.findById(deviceId);
   }
 

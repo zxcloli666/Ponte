@@ -48,8 +48,7 @@ export const useCallsStore = create<CallsState>()((set, get) => ({
 
   setCalls: (calls) => set({ calls }),
 
-  addCall: (call) =>
-    set({ calls: [call, ...get().calls] }),
+  addCall: (call) => set({ calls: [call, ...get().calls] }),
 
   setActiveCall: (call) => set({ activeCall: call }),
 

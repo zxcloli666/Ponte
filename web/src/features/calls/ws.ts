@@ -1,6 +1,6 @@
-import type { Socket } from "socket.io-client";
-import { useCallsStore, type ActiveCall, type CallRecord } from "./store";
 import { setLastEventId } from "@/shared/api/ws";
+import type { Socket } from "socket.io-client";
+import { type ActiveCall, type CallRecord, useCallsStore } from "./store";
 
 /**
  * Register call-related Socket.IO event handlers.
@@ -44,8 +44,12 @@ export function registerCallHandlers(socket: Socket): () => void {
     const current = store.activeCall;
 
     // Update callId if we have a pending outgoing call (callId starts with "pending-")
-    if (current && current.callId.startsWith("pending-") && data.callId) {
-      store.setActiveCall({ ...current, callId: data.callId, status: data.status as ActiveCall["status"] });
+    if (current?.callId.startsWith("pending-") && data.callId) {
+      store.setActiveCall({
+        ...current,
+        callId: data.callId,
+        status: data.status as ActiveCall["status"],
+      });
       return;
     }
 

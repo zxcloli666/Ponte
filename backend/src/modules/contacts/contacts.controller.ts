@@ -41,7 +41,7 @@ export class ContactsController {
    * Query params: q (search query), page, limit.
    */
   @Get()
-  async list(
+  list(
     @Req() req: { user: JwtPayload },
     @Query() query: Record<string, unknown>,
   ) {
@@ -66,7 +66,7 @@ export class ContactsController {
    * GET /contacts/:id — Get a single contact by ID.
    */
   @Get(":id")
-  async getById(@Param("id", ParseUUIDPipe) id: string) {
+  getById(@Param("id", ParseUUIDPipe) id: string) {
     return this.contactsService.getContact(id);
   }
 

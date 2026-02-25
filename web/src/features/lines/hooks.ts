@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useShallow } from "zustand/shallow";
-import { useLinesStore, useLineOptions } from "./store";
+import { useLineOptions, useLinesStore } from "./store";
 
 /**
  * Get all lines and the current selection.

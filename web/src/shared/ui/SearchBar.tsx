@@ -1,5 +1,5 @@
-import { memo, useRef, type ChangeEvent } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { type ChangeEvent, memo, useRef } from "react";
 import styles from "./SearchBar.module.css";
 
 interface SearchBarProps {
@@ -7,7 +7,6 @@ interface SearchBarProps {
   onChange: (value: string) => void;
   placeholder?: string;
   className?: string;
-  autoFocus?: boolean;
 }
 
 /**
@@ -18,7 +17,6 @@ export const SearchBar = memo(function SearchBar({
   onChange,
   placeholder = "Search...",
   className = "",
-  autoFocus = false,
 }: SearchBarProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -36,6 +34,7 @@ export const SearchBar = memo(function SearchBar({
       {/* Search icon (magnifying glass SVG) */}
       <div className={styles.searchIcon}>
         <svg
+          aria-hidden="true"
           width="16"
           height="16"
           viewBox="0 0 24 24"
@@ -57,7 +56,6 @@ export const SearchBar = memo(function SearchBar({
         value={value}
         onChange={handleChange}
         placeholder={placeholder}
-        autoFocus={autoFocus}
         autoComplete="off"
         autoCorrect="off"
         spellCheck={false}
@@ -77,6 +75,7 @@ export const SearchBar = memo(function SearchBar({
             transition={{ duration: 0.15 }}
           >
             <svg
+              aria-hidden="true"
               width="12"
               height="12"
               viewBox="0 0 24 24"

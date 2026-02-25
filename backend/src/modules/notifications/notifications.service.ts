@@ -102,7 +102,7 @@ export class NotificationsService {
 
   // ─── Filters ────────────────────────────────────────────────────────────────
 
-  async getFilters(deviceIds: string[]): Promise<NotificationFilter[]> {
+  getFilters(deviceIds: string[]): Promise<NotificationFilter[]> {
     return this.repository.findFiltersByDevices(deviceIds);
   }
 
@@ -127,7 +127,7 @@ export class NotificationsService {
 
   // ─── Apps sync ──────────────────────────────────────────────────────────────
 
-  async getApps(deviceIds: string[]) {
+  getApps(deviceIds: string[]) {
     return this.repository.findAppsByDevices(deviceIds);
   }
 

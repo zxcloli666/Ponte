@@ -16,17 +16,11 @@ export function useCalls() {
   );
 
   const filteredCalls = useMemo(
-    () =>
-      filter === "missed"
-        ? calls.filter((c) => c.direction === "missed")
-        : calls,
+    () => (filter === "missed" ? calls.filter((c) => c.direction === "missed") : calls),
     [calls, filter],
   );
 
-  const missedCount = useMemo(
-    () => calls.filter((c) => c.direction === "missed").length,
-    [calls],
-  );
+  const missedCount = useMemo(() => calls.filter((c) => c.direction === "missed").length, [calls]);
 
   return { calls: filteredCalls, allCalls: calls, isLoading, filter, setFilter, missedCount };
 }

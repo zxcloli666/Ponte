@@ -57,7 +57,7 @@ export class SimsRepository {
   /**
    * Find all SIMs belonging to a specific device, with nested extra numbers.
    */
-  async findSimsByDeviceId(deviceId: string) {
+  findSimsByDeviceId(deviceId: string) {
     return this.db.query.sims.findMany({
       where: eq(sims.deviceId, deviceId),
       with: { extraNumbers: true },
@@ -201,7 +201,7 @@ export class SimsRepository {
   /**
    * Find extra numbers for a SIM.
    */
-  async findExtraNumbersBySimId(simId: string) {
+  findExtraNumbersBySimId(simId: string) {
     return this.db
       .select()
       .from(extraNumbers)

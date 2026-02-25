@@ -1,6 +1,6 @@
-import type { Socket } from "socket.io-client";
-import { useSmsStore, type SmsMessage } from "./store";
 import { setLastEventId } from "@/shared/api/ws";
+import type { Socket } from "socket.io-client";
+import { type SmsMessage, useSmsStore } from "./store";
 
 /**
  * Register SMS-related Socket.IO event handlers.

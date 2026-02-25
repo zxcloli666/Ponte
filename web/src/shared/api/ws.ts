@@ -1,4 +1,4 @@
-import { io, type Socket } from "socket.io-client";
+import { type Socket, io } from "socket.io-client";
 
 /**
  * Socket.IO singleton.
@@ -28,7 +28,7 @@ export function connectSocket(accessToken: string): Socket {
     reconnection: true,
     reconnectionDelay: 1_000,
     reconnectionDelayMax: 30_000,
-    reconnectionAttempts: Infinity,
+    reconnectionAttempts: Number.POSITIVE_INFINITY,
     transports: ["websocket", "polling"],
     autoConnect: true,
   });

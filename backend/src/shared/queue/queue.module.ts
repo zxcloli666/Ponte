@@ -1,5 +1,5 @@
 import { Module, Global } from "@nestjs/common";
-import { Queue, Worker, type ConnectionOptions } from "bullmq";
+import { Queue, type ConnectionOptions } from "bullmq";
 
 export const QUEUE_CONNECTION = Symbol("QUEUE_CONNECTION");
 export const DELIVERY_QUEUE = Symbol("DELIVERY_QUEUE");

@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
 import { api } from "@/shared/api/client";
+import { useCallback, useEffect, useState } from "react";
 
 type PushPermission = "granted" | "denied" | "default" | "unsupported";
 
@@ -29,9 +29,7 @@ export function usePushNotifications() {
       const registration = await navigator.serviceWorker.ready;
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(
-          import.meta.env.VITE_VAPID_PUBLIC_KEY || "",
-        ),
+        applicationServerKey: urlBase64ToUint8Array(import.meta.env.VITE_VAPID_PUBLIC_KEY || ""),
       });
 
       // Send subscription to backend
