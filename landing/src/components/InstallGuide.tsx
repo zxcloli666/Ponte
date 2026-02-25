@@ -1,9 +1,11 @@
+const APP_URL = import.meta.env.VITE_APP_URL || "https://app.ponte.work.gd";
+
 const installSteps = [
   {
     step: 1,
-    title: "Откройте в Safari",
+    title: "Откройте приложение в Safari",
     description:
-      "Перейдите по ссылке на Ponte PWA в Safari на вашем iPhone. Важно: используйте именно Safari — другие браузеры не поддерживают установку PWA.",
+      `Откройте ${APP_URL} в Safari на вашем iPhone. Важно: используйте именно Safari — другие браузеры не поддерживают установку PWA.`,
     visual: "safari-url-bar",
   },
   {
