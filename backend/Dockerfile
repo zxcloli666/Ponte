@@ -1,5 +1,5 @@
 # Stage 1: Cache dependencies
-FROM denoland/deno:2 AS cache
+FROM denoland/deno:latest AS cache
 WORKDIR /app
 COPY deno.json deno.lock* ./
 RUN deno install --allow-scripts=npm:@nestjs/core,npm:msgpackr-extract
