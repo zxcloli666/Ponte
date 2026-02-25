@@ -53,7 +53,7 @@ cd "$ROOT_DIR"
 
 # Start web dev server
 echo "Starting web dev server..."
-cd "$ROOT_DIR/web" && npm run dev &
+cd "$ROOT_DIR/web" && pnpm dev &
 WEB_PID=$!
 cd "$ROOT_DIR"
 
