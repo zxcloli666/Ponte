@@ -8,6 +8,11 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
@@ -19,7 +24,6 @@ body {
   background: var(--color-bg);
   color: var(--color-text-primary);
   line-height: 1.5;
-  overflow-x: hidden;
 }
 
 body::before {

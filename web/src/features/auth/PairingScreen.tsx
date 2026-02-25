@@ -16,6 +16,11 @@ export default function PairingScreen() {
   const setPairingToken = useAuthStore((s) => s.setPairingToken);
   const setDeviceName = useAuthStore((s) => s.setDeviceName);
 
+    const restartPairing = useCallback(() => {
+        // небольшая пауза, чтобы UI успел отрисоваться
+        setTimeout(() => initPairing(), 500);
+    }, []);
+
   const initPairing = useCallback(async () => {
     try {
       setError(null);
@@ -37,7 +42,30 @@ export default function PairingScreen() {
               1200,
             );
           }
-        } catch {}
+        // biome-ignore lint/suspicious/noExplicitAny: error handler
+        } catch (e: any) {
+            console.log("checkPairingStatus error:", e);
+            // ---------- exception «pairing token expired» ----------
+            if (e?.response?.status === 400) {
+                try {
+                    const body = await e.response.json();
+                    const msg = body?.error?.message?.toLowerCase?.() ?? "";
+                    if (msg.includes("expired") || msg.includes("invalid")) {
+                        // токен устарел – перезапускаем процесс паринга
+                        if (pollRef.current) clearInterval(pollRef.current);
+                        setError("Токен pairing expired, getting new…");
+                        restartPairing();
+                        return;
+                    }
+                } catch {
+                    if (pollRef.current) clearInterval(pollRef.current);
+                    restartPairing();
+                    return;
+                }
+            }
+
+            console.error("checkPairingStatus error:", e);
+        }
       }, 2000);
     } catch {
       setError("Не удалось получить код. Попробуйте снова.");

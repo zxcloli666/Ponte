@@ -9,14 +9,15 @@ export function Hero() {
         justifyContent: "center",
         textAlign: "center",
         position: "relative",
+        overflow: "hidden",
       }}
     >
       {/* Decorative glow orbs */}
       <div
         style={{
           position: "absolute",
-          width: 500,
-          height: 500,
+          width: "min(500px, 80vw)",
+          height: "min(500px, 80vw)",
           borderRadius: "50%",
           background:
             "radial-gradient(circle, rgba(110, 142, 251, 0.12) 0%, transparent 70%)",
@@ -29,8 +30,8 @@ export function Hero() {
       <div
         style={{
           position: "absolute",
-          width: 400,
-          height: 400,
+          width: "min(400px, 70vw)",
+          height: "min(400px, 70vw)",
           borderRadius: "50%",
           background:
             "radial-gradient(circle, rgba(167, 119, 227, 0.1) 0%, transparent 70%)",
