@@ -40,9 +40,51 @@ jobs:
             echo "release=false" >> "$GITHUB_OUTPUT"
           fi
 
+  version:
+    name: Calculate version
+    needs: check-release
+    if: needs.check-release.outputs.should-release == 'true'
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.bump.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - id: bump
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          VERSION_INPUT: ${{ github.event.inputs.version_type }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+        run: |
+          # Determine release type
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            TYPE="$VERSION_INPUT"
+          else
+            TYPE=$(echo "$COMMIT_MSG" | grep -oP '!release:\s*\K(major|minor|patch)' || echo "patch")
+          fi
+
+          # Get last tag, default to 0.0.0
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          LAST_VERSION="${LAST_TAG#v}"
+
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$LAST_VERSION"
+          MAJOR=${MAJOR:-0}; MINOR=${MINOR:-0}; PATCH=${PATCH:-0}
+
+          case "$TYPE" in
+            major) MAJOR=$((MAJOR + 1)); MINOR=0; PATCH=0 ;;
+            minor) MINOR=$((MINOR + 1)); PATCH=0 ;;
+            patch) PATCH=$((PATCH + 1)) ;;
+          esac
+
+          VERSION="${MAJOR}.${MINOR}.${PATCH}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Calculated version: $VERSION (type: $TYPE, previous: $LAST_VERSION)"
+
   backend-docker:
     name: Backend Docker
-    needs: check-release
+    needs: [check-release, version]
     if: needs.check-release.outputs.should-release == 'true'
     runs-on: ubuntu-latest
     permissions:
@@ -50,6 +92,7 @@ jobs:
       packages: write
     env:
       REPO: ${{ github.repository }}
+      VERSION: ${{ needs.version.outputs.version }}
     steps:
       - uses: actions/checkout@v4
 
@@ -62,13 +105,19 @@ jobs:
       - name: Build and push
         run: |
           REPO_LC="${REPO,,}"
-          docker build -t "ghcr.io/${REPO_LC}/ponte-backend:latest" -t "ghcr.io/${REPO_LC}/ponte-backend:${{ github.sha }}" backend
-          docker push "ghcr.io/${REPO_LC}/ponte-backend:latest"
-          docker push "ghcr.io/${REPO_LC}/ponte-backend:${{ github.sha }}"
+          IMAGE="ghcr.io/${REPO_LC}/ponte-backend"
+          docker build \
+            -t "${IMAGE}:latest" \
+            -t "${IMAGE}:${VERSION}" \
+            -t "${IMAGE}:${{ github.sha }}" \
+            backend
+          docker push "${IMAGE}:latest"
+          docker push "${IMAGE}:${VERSION}"
+          docker push "${IMAGE}:${{ github.sha }}"
 
   web-docker:
     name: Web Docker
-    needs: check-release
+    needs: [check-release, version]
     if: needs.check-release.outputs.should-release == 'true'
     runs-on: ubuntu-latest
     permissions:
@@ -76,6 +125,7 @@ jobs:
       packages: write
     env:
       REPO: ${{ github.repository }}
+      VERSION: ${{ needs.version.outputs.version }}
     steps:
       - uses: actions/checkout@v4
 
@@ -88,9 +138,15 @@ jobs:
       - name: Build and push
         run: |
           REPO_LC="${REPO,,}"
-          docker build -t "ghcr.io/${REPO_LC}/ponte-web:latest" -t "ghcr.io/${REPO_LC}/ponte-web:${{ github.sha }}" web
-          docker push "ghcr.io/${REPO_LC}/ponte-web:latest"
-          docker push "ghcr.io/${REPO_LC}/ponte-web:${{ github.sha }}"
+          IMAGE="ghcr.io/${REPO_LC}/ponte-web"
+          docker build \
+            -t "${IMAGE}:latest" \
+            -t "${IMAGE}:${VERSION}" \
+            -t "${IMAGE}:${{ github.sha }}" \
+            web
+          docker push "${IMAGE}:latest"
+          docker push "${IMAGE}:${VERSION}"
+          docker push "${IMAGE}:${{ github.sha }}"
 
   android-release:
     name: Android Release
