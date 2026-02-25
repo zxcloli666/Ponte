@@ -175,7 +175,6 @@ fun PairingScreen(
     }
 }
 
-@OptIn(androidx.camera.core.ExperimentalGetImage::class)
 @Composable
 private fun QrCameraPreview(onQrScanned: (String) -> Unit) {
     val context = LocalContext.current
