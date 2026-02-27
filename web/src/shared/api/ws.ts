@@ -76,11 +76,11 @@ export function updateSocketAuth(accessToken: string): void {
 }
 
 /**
- * Get last event ID from sessionStorage for reconnect sync.
+ * Get last event ID from localStorage for reconnect sync.
  */
 function getLastEventId(): string | null {
   try {
-    return sessionStorage.getItem("ponte-last-event-id");
+    return localStorage.getItem("ponte-last-event-id");
   } catch {
     return null;
   }
@@ -91,8 +91,8 @@ function getLastEventId(): string | null {
  */
 export function setLastEventId(eventId: string): void {
   try {
-    sessionStorage.setItem("ponte-last-event-id", eventId);
+    localStorage.setItem("ponte-last-event-id", eventId);
   } catch {
-    // sessionStorage may not be available
+    // localStorage may not be available
   }
 }

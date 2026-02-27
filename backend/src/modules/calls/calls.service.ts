@@ -99,6 +99,8 @@ export class CallsService {
     const payload = {
       callId,
       from,
+      simId,
+      extraNumberId: extraNumberId ?? null,
       sim: {
         displayName: sim.displayName,
         displayNumber: sim.displayNumber,

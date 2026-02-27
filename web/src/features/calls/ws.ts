@@ -9,9 +9,11 @@ export function registerCallHandlers(socket: Socket): () => void {
   const handleIncomingCall = (data: {
     callId: string;
     from: string;
-    sim?: { id: string; displayName: string; color: string } | null;
+    simId: string;
+    extraNumberId?: string | null;
+    sim?: { displayName: string; displayNumber: string; color: string } | null;
     contact?: { id: string; name: string; photoUrl: string | null } | null;
-    extraNumber?: { id: string; displayName: string; color: string } | null;
+    extraNumber?: { displayName: string; displayNumber: string; color: string } | null;
     eventId?: string;
   }) => {
     const activeCall: ActiveCall = {
@@ -19,8 +21,8 @@ export function registerCallHandlers(socket: Socket): () => void {
       address: data.from,
       contactName: data.contact?.name ?? null,
       direction: "incoming",
-      simId: data.sim?.id ?? "",
-      extraNumberId: data.extraNumber?.id ?? null,
+      simId: data.simId,
+      extraNumberId: data.extraNumberId ?? null,
       status: "ringing",
       startedAt: new Date().toISOString(),
     };

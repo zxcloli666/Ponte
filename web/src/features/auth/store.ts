@@ -1,3 +1,4 @@
+import { idbStorage } from "@/shared/storage/idb";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
@@ -77,7 +78,7 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: "ponte-auth",
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => idbStorage),
       partialize: (state) => ({
         accessToken: state.accessToken,
         refreshToken: state.refreshToken,

@@ -82,7 +82,7 @@ export function App() {
         {activeCall &&
           (activeCall.status === "active" ||
             activeCall.status === "connecting" ||
-            (activeCall.status === "ringing" && activeCall.direction === "incoming")) && (
+            activeCall.status === "ringing") && (
             <ActiveCallScreen />
           )}
       </AnimatePresence>

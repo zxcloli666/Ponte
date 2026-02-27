@@ -56,7 +56,7 @@ export default function ContactsScreen() {
         </div>
       </Header>
 
-      <div style={{ flex: 1, position: "relative" }}>
+      <div style={{ flex: 1, position: "relative", overflow: "hidden", minHeight: 0 }}>
         <PullToRefresh onRefresh={handleRefresh}>
           {isLoading && totalCount === 0 ? (
             <div style={{ display: "flex", justifyContent: "center", padding: "var(--space-2xl)" }}>

@@ -8,7 +8,7 @@
   z-index: 100;
   display: flex;
   justify-content: center;
-  padding-bottom: calc(var(--safe-bottom, 0px) + var(--space-sm));
+  padding-bottom: var(--safe-bottom, 0px);
   pointer-events: none;
 }
 

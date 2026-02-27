@@ -161,7 +161,8 @@ export function Layout() {
         style={{
           flex: 1,
           overflow: "hidden",
-          paddingBottom: hideTabBar ? 0 : "calc(var(--tab-bar-height) + 24px)",
+          minHeight: 0,
+          paddingBottom: hideTabBar ? 0 : "var(--tab-bar-height)",
         }}
       >
         <div style={{ height: "100%" }}>

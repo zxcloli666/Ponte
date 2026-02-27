@@ -1,7 +1,13 @@
 import { useAuthStore } from "@/features/auth/store";
 import { Spinner } from "@/shared/ui/Spinner";
 import { Suspense, lazy } from "react";
-import { Navigate, Outlet, useRouteError, isRouteErrorResponse, type RouteObject } from "react-router";
+import {
+  Navigate,
+  Outlet,
+  type RouteObject,
+  isRouteErrorResponse,
+  useRouteError,
+} from "react-router";
 import { Layout } from "./layout";
 
 /** Lazy-loaded screens for code splitting */
@@ -136,9 +142,9 @@ function ErrorScreen({ code, title, message }: { code: string; title: string; me
             boxShadow: "var(--glow-accent, 0 0 20px rgba(110,142,251,0.3))",
             transition: "transform var(--duration-fast, 150ms) var(--ease-out)",
           }}
-          onPointerDown={(e) => ((e.currentTarget.style.transform = "scale(0.96)"))}
-          onPointerUp={(e) => ((e.currentTarget.style.transform = ""))}
-          onPointerLeave={(e) => ((e.currentTarget.style.transform = ""))}
+          onPointerDown={(e) => (e.currentTarget.style.transform = "scale(0.96)")}
+          onPointerUp={(e) => (e.currentTarget.style.transform = "")}
+          onPointerLeave={(e) => (e.currentTarget.style.transform = "")}
         >
           На главную
         </button>

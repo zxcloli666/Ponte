@@ -1,21 +1,28 @@
 import { setLastEventId } from "@/shared/api/ws";
 import type { Socket } from "socket.io-client";
-import { type AppNotification, useNotificationsStore } from "./store";
+import { useNotificationsStore } from "./store";
 
 /**
  * Register notification Socket.IO event handlers.
  */
 export function registerNotificationHandlers(socket: Socket): () => void {
   const handleNewNotification = (data: {
-    notification: AppNotification;
+    id: string;
+    packageName: string;
+    appName: string;
+    title: string;
+    body: string;
+    postedAt: string;
+    ackId?: string;
     eventId?: string;
   }) => {
-    useNotificationsStore.getState().addNotification(data.notification);
+    const { ackId, eventId, ...notification } = data;
+    useNotificationsStore.getState().addNotification(notification);
 
-    socket.emit("notification:received", { id: data.notification.id });
+    socket.emit("notification:received", { id: data.id, ackId: ackId ?? data.id });
 
-    if (data.eventId) {
-      setLastEventId(data.eventId);
+    if (eventId) {
+      setLastEventId(eventId);
     }
   };
 

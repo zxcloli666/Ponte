@@ -1,3 +1,4 @@
+import { useAuthStore } from "@/features/auth/store";
 import ky from "ky";
 import type { KyInstance } from "ky";
 
@@ -7,14 +8,7 @@ import type { KyInstance } from "ky";
  */
 
 function getAccessToken(): string | null {
-  try {
-    const stored = sessionStorage.getItem("ponte-auth");
-    if (!stored) return null;
-    const parsed = JSON.parse(stored) as { state?: { accessToken?: string } };
-    return parsed.state?.accessToken ?? null;
-  } catch {
-    return null;
-  }
+  return useAuthStore.getState().accessToken;
 }
 
 export const api: KyInstance = ky.create({
@@ -42,7 +36,6 @@ export const api: KyInstance = ky.create({
       async (_request, _options, response) => {
         if (response.status === 401) {
           // Attempt token refresh
-          const { useAuthStore } = await import("@/features/auth/store");
           const store = useAuthStore.getState();
 
           if (store.refreshToken) {
