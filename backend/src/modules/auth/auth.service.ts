@@ -16,9 +16,11 @@ import {
   verifyAuthenticationResponse,
 } from "@simplewebauthn/server";
 import type {
-  RegistrationResponseJSON,
-  AuthenticationResponseJSON,
+  VerifyRegistrationResponseOpts,
+  VerifyAuthenticationResponseOpts,
 } from "@simplewebauthn/server";
+type RegistrationResponseJSON = VerifyRegistrationResponseOpts["response"];
+type AuthenticationResponseJSON = VerifyAuthenticationResponseOpts["response"];
 import { REDIS, type RedisClient } from "../../shared/redis/redis.module.ts";
 import { AuthRepository } from "./auth.repository.ts";
 import type { TokenPair, JwtClaims, PairRequestDto, RefreshRequestDto } from "../../shared/types/index.ts";
@@ -266,7 +268,7 @@ export class AuthService {
       attestationType: "none",
       excludeCredentials: existingPasskeys.map((pk) => ({
         id: pk.credentialId,
-        transports: (pk.transports as string[] | null) ?? undefined,
+        ...((pk.transports ? { transports: pk.transports } : {}) as Record<string, unknown>),
       })),
       authenticatorSelection: {
         residentKey: "preferred",
@@ -308,7 +310,8 @@ export class AuthService {
     await this.authRepository.createPasskey({
       userId,
       credentialId: credential.id,
-      publicKey: Buffer.from(credential.publicKey).toString("base64url"),
+      publicKey: btoa(String.fromCharCode(...new Uint8Array(credential.publicKey)))
+        .replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""),
       counter: credential.counter,
       transports: response.response.transports,
     });
@@ -377,10 +380,8 @@ export class AuthService {
         id: passkey.credentialId,
         publicKey: publicKeyBytes,
         counter: passkey.counter,
-        transports: (passkey.transports as string[] | null) as
-          | AuthenticationResponseJSON["response"]["transports"]
-          | undefined,
-      },
+        transports: passkey.transports ?? undefined,
+      } as VerifyAuthenticationResponseOpts["credential"],
     });
 
     if (!verification.verified) {

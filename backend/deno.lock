@@ -9,6 +9,7 @@
     "npm:@nestjs/platform-express@^10.4.0": "10.4.22_@nestjs+common@10.4.22__reflect-metadata@0.2.2__rxjs@7.8.2_@nestjs+core@10.4.22__@nestjs+common@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2__@nestjs+platform-express@10.4.22__@nestjs+websockets@10.4.22___@nestjs+common@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2___@nestjs+core@10.4.22___@nestjs+platform-socket.io@10.4.22____@nestjs+common@10.4.22_____reflect-metadata@0.2.2_____rxjs@7.8.2____@nestjs+websockets@10.4.22____rxjs@7.8.2____reflect-metadata@0.2.2____@nestjs+core@10.4.22____@nestjs+platform-express@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2___@nestjs+platform-express@10.4.22__reflect-metadata@0.2.2__rxjs@7.8.2__@nestjs+platform-socket.io@10.4.22___@nestjs+common@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2___@nestjs+websockets@10.4.22____@nestjs+common@10.4.22_____reflect-metadata@0.2.2_____rxjs@7.8.2____@nestjs+core@10.4.22____@nestjs+platform-socket.io@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2____@nestjs+platform-express@10.4.22___rxjs@7.8.2___reflect-metadata@0.2.2___@nestjs+core@10.4.22___@nestjs+platform-express@10.4.22_reflect-metadata@0.2.2_rxjs@7.8.2_@nestjs+websockets@10.4.22__@nestjs+common@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2__@nestjs+core@10.4.22___@nestjs+common@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2___@nestjs+platform-express@10.4.22___@nestjs+websockets@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2___@nestjs+platform-socket.io@10.4.22____@nestjs+common@10.4.22_____reflect-metadata@0.2.2_____rxjs@7.8.2____@nestjs+websockets@10.4.22____rxjs@7.8.2____reflect-metadata@0.2.2____@nestjs+core@10.4.22____@nestjs+platform-express@10.4.22__@nestjs+platform-socket.io@10.4.22___@nestjs+common@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2___@nestjs+websockets@10.4.22___rxjs@7.8.2___reflect-metadata@0.2.2___@nestjs+core@10.4.22____@nestjs+common@10.4.22_____reflect-metadata@0.2.2_____rxjs@7.8.2____@nestjs+platform-express@10.4.22____@nestjs+websockets@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2____@nestjs+platform-socket.io@10.4.22___@nestjs+platform-express@10.4.22__reflect-metadata@0.2.2__rxjs@7.8.2__@nestjs+platform-express@10.4.22_@nestjs+platform-socket.io@10.4.22__@nestjs+common@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2__@nestjs+websockets@10.4.22___@nestjs+common@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2___@nestjs+core@10.4.22____@nestjs+common@10.4.22_____reflect-metadata@0.2.2_____rxjs@7.8.2____@nestjs+platform-express@10.4.22____@nestjs+websockets@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2____@nestjs+platform-socket.io@10.4.22___@nestjs+platform-socket.io@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2___@nestjs+platform-express@10.4.22__rxjs@7.8.2__reflect-metadata@0.2.2__@nestjs+core@10.4.22___@nestjs+common@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2___@nestjs+platform-express@10.4.22___@nestjs+websockets@10.4.22____@nestjs+common@10.4.22_____reflect-metadata@0.2.2_____rxjs@7.8.2____@nestjs+core@10.4.22____@nestjs+platform-socket.io@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2____@nestjs+platform-express@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2___@nestjs+platform-socket.io@10.4.22__@nestjs+platform-express@10.4.22",
     "npm:@nestjs/platform-socket.io@^10.4.0": "10.4.22_@nestjs+common@10.4.22__reflect-metadata@0.2.2__rxjs@7.8.2_@nestjs+websockets@10.4.22__@nestjs+common@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2__@nestjs+core@10.4.22___@nestjs+common@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2___@nestjs+platform-express@10.4.22____@nestjs+common@10.4.22_____reflect-metadata@0.2.2_____rxjs@7.8.2____@nestjs+core@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2____@nestjs+websockets@10.4.22____@nestjs+platform-socket.io@10.4.22___@nestjs+websockets@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2___@nestjs+platform-socket.io@10.4.22__@nestjs+platform-socket.io@10.4.22__reflect-metadata@0.2.2__rxjs@7.8.2__@nestjs+platform-express@10.4.22___@nestjs+common@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2___@nestjs+core@10.4.22____@nestjs+common@10.4.22_____reflect-metadata@0.2.2_____rxjs@7.8.2____@nestjs+platform-express@10.4.22____@nestjs+websockets@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2____@nestjs+platform-socket.io@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2___@nestjs+websockets@10.4.22___@nestjs+platform-socket.io@10.4.22_rxjs@7.8.2_reflect-metadata@0.2.2_@nestjs+core@10.4.22__@nestjs+common@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2__@nestjs+platform-express@10.4.22___@nestjs+common@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2___@nestjs+core@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2___@nestjs+websockets@10.4.22____@nestjs+common@10.4.22_____reflect-metadata@0.2.2_____rxjs@7.8.2____@nestjs+core@10.4.22____@nestjs+platform-socket.io@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2____@nestjs+platform-express@10.4.22___@nestjs+platform-socket.io@10.4.22__@nestjs+websockets@10.4.22___@nestjs+common@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2___@nestjs+core@10.4.22___@nestjs+platform-socket.io@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2___@nestjs+platform-express@10.4.22____@nestjs+common@10.4.22_____reflect-metadata@0.2.2_____rxjs@7.8.2____@nestjs+core@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2____@nestjs+websockets@10.4.22____@nestjs+platform-socket.io@10.4.22__reflect-metadata@0.2.2__rxjs@7.8.2__@nestjs+platform-socket.io@10.4.22_@nestjs+platform-express@10.4.22__@nestjs+common@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2__@nestjs+core@10.4.22___@nestjs+common@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2___@nestjs+platform-express@10.4.22___@nestjs+websockets@10.4.22____@nestjs+common@10.4.22_____reflect-metadata@0.2.2_____rxjs@7.8.2____@nestjs+core@10.4.22____@nestjs+platform-socket.io@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2____@nestjs+platform-express@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2___@nestjs+platform-socket.io@10.4.22__reflect-metadata@0.2.2__rxjs@7.8.2__@nestjs+websockets@10.4.22___@nestjs+common@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2___@nestjs+core@10.4.22____@nestjs+common@10.4.22_____reflect-metadata@0.2.2_____rxjs@7.8.2____@nestjs+platform-express@10.4.22____@nestjs+websockets@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2____@nestjs+platform-socket.io@10.4.22___@nestjs+platform-socket.io@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2___@nestjs+platform-express@10.4.22__@nestjs+platform-socket.io@10.4.22",
     "npm:@nestjs/websockets@^10.4.0": "10.4.22_@nestjs+common@10.4.22__reflect-metadata@0.2.2__rxjs@7.8.2_@nestjs+core@10.4.22__@nestjs+common@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2__@nestjs+platform-express@10.4.22___@nestjs+common@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2___@nestjs+core@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2___@nestjs+websockets@10.4.22___@nestjs+platform-socket.io@10.4.22____@nestjs+common@10.4.22_____reflect-metadata@0.2.2_____rxjs@7.8.2____@nestjs+websockets@10.4.22____rxjs@7.8.2____reflect-metadata@0.2.2____@nestjs+core@10.4.22____@nestjs+platform-express@10.4.22__@nestjs+websockets@10.4.22__reflect-metadata@0.2.2__rxjs@7.8.2__@nestjs+platform-socket.io@10.4.22___@nestjs+common@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2___@nestjs+websockets@10.4.22___rxjs@7.8.2___reflect-metadata@0.2.2___@nestjs+core@10.4.22___@nestjs+platform-express@10.4.22____@nestjs+common@10.4.22_____reflect-metadata@0.2.2_____rxjs@7.8.2____@nestjs+core@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2____@nestjs+websockets@10.4.22____@nestjs+platform-socket.io@10.4.22_@nestjs+platform-socket.io@10.4.22__@nestjs+common@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2__@nestjs+websockets@10.4.22__rxjs@7.8.2__reflect-metadata@0.2.2__@nestjs+core@10.4.22___@nestjs+common@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2___@nestjs+platform-express@10.4.22____@nestjs+common@10.4.22_____reflect-metadata@0.2.2_____rxjs@7.8.2____@nestjs+core@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2____@nestjs+websockets@10.4.22____@nestjs+platform-socket.io@10.4.22___@nestjs+websockets@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2___@nestjs+platform-socket.io@10.4.22__@nestjs+platform-express@10.4.22___@nestjs+common@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2___@nestjs+core@10.4.22____@nestjs+common@10.4.22_____reflect-metadata@0.2.2_____rxjs@7.8.2____@nestjs+platform-express@10.4.22____@nestjs+websockets@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2____@nestjs+platform-socket.io@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2___@nestjs+websockets@10.4.22___@nestjs+platform-socket.io@10.4.22_reflect-metadata@0.2.2_rxjs@7.8.2_@nestjs+platform-express@10.4.22__@nestjs+common@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2__@nestjs+core@10.4.22___@nestjs+common@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2___@nestjs+platform-express@10.4.22___@nestjs+websockets@10.4.22___reflect-metadata@0.2.2___rxjs@7.8.2___@nestjs+platform-socket.io@10.4.22____@nestjs+common@10.4.22_____reflect-metadata@0.2.2_____rxjs@7.8.2____@nestjs+websockets@10.4.22____rxjs@7.8.2____reflect-metadata@0.2.2____@nestjs+core@10.4.22____@nestjs+platform-express@10.4.22__reflect-metadata@0.2.2__rxjs@7.8.2__@nestjs+websockets@10.4.22__@nestjs+platform-socket.io@10.4.22___@nestjs+common@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2___@nestjs+websockets@10.4.22___rxjs@7.8.2___reflect-metadata@0.2.2___@nestjs+core@10.4.22____@nestjs+common@10.4.22_____reflect-metadata@0.2.2_____rxjs@7.8.2____@nestjs+platform-express@10.4.22____@nestjs+websockets@10.4.22____reflect-metadata@0.2.2____rxjs@7.8.2____@nestjs+platform-socket.io@10.4.22___@nestjs+platform-express@10.4.22",
+    "npm:@simplewebauthn/server@11": "11.0.0",
     "npm:bcryptjs@^2.4.3": "2.4.3",
     "npm:bullmq@^5.12.0": "5.69.3",
     "npm:drizzle-kit@0.24": "0.24.2_esbuild@0.19.12",
@@ -285,8 +286,14 @@
       "os": ["win32"],
       "cpu": ["x64"]
     },
+    "@hexagon/base64@1.1.28": {
+      "integrity": "sha512-lhqDEAvWixy3bZ+UOYbPwUbBkwBq5C1LAJ/xPC8Oi+lL54oyakv/npbA0aU2hgCsx/1NUd4IBvV03+aUBWxerw=="
+    },
     "@ioredis/commands@1.5.0": {
       "integrity": "sha512-eUgLqrMf8nJkZxT24JvVRrQya1vZkQh8BBeYNwGDqa5I0VUi8ACx7uFvAaLxintokpTenkK6DASvo/bvNbBGow=="
+    },
+    "@levischuck/tiny-cbor@0.2.11": {
+      "integrity": "sha512-llBRm4dT4Z89aRsm6u2oEZ8tfwL/2l6BwpZ7JcyieouniDECM5AqNgr/y08zalEIvW3RSK4upYyybDcmjXqAow=="
     },
     "@lukeed/csprng@1.1.0": {
       "integrity": "sha512-Z7C/xXCiGWsg0KuKsHTKJxbWhpI3Vs5GwLfOean7MGyVFGqdRgBbAjOCh6u4bbjPc/8MJ2pZmK/0DLdCbivLDA=="
@@ -408,8 +415,69 @@
       ],
       "bin": true
     },
+    "@peculiar/asn1-android@2.6.0": {
+      "integrity": "sha512-cBRCKtYPF7vJGN76/yG8VbxRcHLPF3HnkoHhKOZeHpoVtbMYfY9ROKtH3DtYUY9m8uI1Mh47PRhHf2hSK3xcSQ==",
+      "dependencies": [
+        "@peculiar/asn1-schema",
+        "asn1js",
+        "tslib"
+      ]
+    },
+    "@peculiar/asn1-ecc@2.6.1": {
+      "integrity": "sha512-+Vqw8WFxrtDIN5ehUdvlN2m73exS2JVG0UAyfVB31gIfor3zWEAQPD+K9ydCxaj3MLen9k0JhKpu9LqviuCE1g==",
+      "dependencies": [
+        "@peculiar/asn1-schema",
+        "@peculiar/asn1-x509",
+        "asn1js",
+        "tslib"
+      ]
+    },
+    "@peculiar/asn1-rsa@2.6.1": {
+      "integrity": "sha512-1nVMEh46SElUt5CB3RUTV4EG/z7iYc7EoaDY5ECwganibQPkZ/Y2eMsTKB/LeyrUJ+W/tKoD9WUqIy8vB+CEdA==",
+      "dependencies": [
+        "@peculiar/asn1-schema",
+        "@peculiar/asn1-x509",
+        "asn1js",
+        "tslib"
+      ]
+    },
+    "@peculiar/asn1-schema@2.6.0": {
+      "integrity": "sha512-xNLYLBFTBKkCzEZIw842BxytQQATQv+lDTCEMZ8C196iJcJJMBUZxrhSTxLaohMyKK8QlzRNTRkUmanucnDSqg==",
+      "dependencies": [
+        "asn1js",
+        "pvtsutils",
+        "tslib"
+      ]
+    },
+    "@peculiar/asn1-x509@2.6.1": {
+      "integrity": "sha512-O9jT5F1A2+t3r7C4VT7LYGXqkGLK7Kj1xFpz7U0isPrubwU5PbDoyYtx6MiGst29yq7pXN5vZbQFKRCP+lLZlA==",
+      "dependencies": [
+        "@peculiar/asn1-schema",
+        "asn1js",
+        "pvtsutils",
+        "tslib"
+      ]
+    },
     "@pinojs/redact@0.4.0": {
       "integrity": "sha512-k2ENnmBugE/rzQfEcdWHcCY+/FM3VLzH9cYEsbdsoqrvzAKRhUZeRNhAZvB8OitQJ1TBed3yqWtdjzS6wJKBwg=="
+    },
+    "@simplewebauthn/server@11.0.0": {
+      "integrity": "sha512-zu8dxKcPiRUNSN2kmrnNOzNbRI8VaR/rL4ENCHUfC6PEE7SAAdIql9g5GBOd/wOVZolIsaZz3ccFxuGoVP0iaw==",
+      "dependencies": [
+        "@hexagon/base64",
+        "@levischuck/tiny-cbor",
+        "@peculiar/asn1-android",
+        "@peculiar/asn1-ecc",
+        "@peculiar/asn1-rsa",
+        "@peculiar/asn1-schema",
+        "@peculiar/asn1-x509",
+        "@simplewebauthn/types",
+        "cross-fetch"
+      ]
+    },
+    "@simplewebauthn/types@11.0.0": {
+      "integrity": "sha512-b2o0wC5u2rWts31dTgBkAtSNKGX0cvL6h8QedNsKmj8O4QoLFQFR3DBVBUlpyVEhYKA+mXGUaXbcOc4JdQ3HzA==",
+      "deprecated": true
     },
     "@socket.io/component-emitter@3.1.2": {
       "integrity": "sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA=="
@@ -472,6 +540,14 @@
         "inherits",
         "minimalistic-assert",
         "safer-buffer"
+      ]
+    },
+    "asn1js@3.0.7": {
+      "integrity": "sha512-uLvq6KJu04qoQM6gvBfKFjlh6Gl0vOKQuR5cJMDHQkmwfMOQeN3F3SHCv9SNYSL+CRoHvOGFfllDlVz03GQjvQ==",
+      "dependencies": [
+        "pvtsutils",
+        "pvutils",
+        "tslib"
       ]
     },
     "atomic-sleep@1.0.0": {
@@ -614,6 +690,12 @@
       "integrity": "sha512-p0SaNjrHOnQeR8/VnfGbmg9te2kfyYSQ7Sc/j/6DtPL3JQvKxmjO9TSjNFpujqV3vEYYBvNNvXSxzyksBWAx1Q==",
       "dependencies": [
         "luxon"
+      ]
+    },
+    "cross-fetch@4.1.0": {
+      "integrity": "sha512-uKm5PU+MHTootlWEY+mZ4vvXoCn4fLQxT9dSc1sXVMSFkINTJVN8cAQROpwcKm8bJ/c7rgZVIBWzH5T78sNZZw==",
+      "dependencies": [
+        "node-fetch"
       ]
     },
     "dateformat@4.6.3": {
@@ -1239,6 +1321,15 @@
         "once"
       ]
     },
+    "pvtsutils@1.3.6": {
+      "integrity": "sha512-PLgQXQ6H2FWCaeRak8vvk1GW462lMxB5s3Jm673N82zI4vqtVUPuZdffdZbPDFRoU8kAhItWFtPCWiPpp4/EDg==",
+      "dependencies": [
+        "tslib"
+      ]
+    },
+    "pvutils@1.1.5": {
+      "integrity": "sha512-KTqnxsgGiQ6ZAzZCVlJH5eOjSnvlyEgx1m8bkRJfOhmGRqfo5KLvmAlACQkrjEtOQ4B7wF9TdSLIs9O90MX9xA=="
+    },
     "qs@6.14.2": {
       "integrity": "sha512-V/yCWTTF7VJ9hIh18Ugr2zhJMP01MY7c5kh4J870L7imm6/DIzBsNLTXzMwUA3yZ5b/KBqLx8Kp3uRvd7xSe3Q==",
       "dependencies": [
@@ -1567,6 +1658,7 @@
       "npm:@nestjs/platform-express@^10.4.0",
       "npm:@nestjs/platform-socket.io@^10.4.0",
       "npm:@nestjs/websockets@^10.4.0",
+      "npm:@simplewebauthn/server@11",
       "npm:bcryptjs@^2.4.3",
       "npm:bullmq@^5.12.0",
       "npm:drizzle-kit@0.24",

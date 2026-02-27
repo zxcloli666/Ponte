@@ -192,9 +192,9 @@ export const contacts = pgTable("contacts", {
   deletedAt: timestamp("deleted_at", { withTimezone: true }),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-}, (t) => [
-  unique("contacts_device_android_unique").on(t.deviceId, t.androidId),
-]);
+}, (t) => ({
+  deviceAndroidUnique: unique("contacts_device_android_unique").on(t.deviceId, t.androidId),
+}));
 
 export const contactsRelations = relations(contacts, ({ one, many }) => ({
   device: one(devices, { fields: [contacts.deviceId], references: [devices.id] }),
