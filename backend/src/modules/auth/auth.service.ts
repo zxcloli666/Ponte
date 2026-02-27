@@ -9,6 +9,16 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
 import pino from "pino";
+import {
+  generateRegistrationOptions,
+  verifyRegistrationResponse,
+  generateAuthenticationOptions,
+  verifyAuthenticationResponse,
+} from "@simplewebauthn/server";
+import type {
+  RegistrationResponseJSON,
+  AuthenticationResponseJSON,
+} from "@simplewebauthn/server";
 import { REDIS, type RedisClient } from "../../shared/redis/redis.module.ts";
 import { AuthRepository } from "./auth.repository.ts";
 import type { TokenPair, JwtClaims, PairRequestDto, RefreshRequestDto } from "../../shared/types/index.ts";
@@ -17,7 +27,9 @@ const logger = pino({ level: Deno.env.get("LOG_LEVEL") ?? "info" });
 
 const PAIRING_TOKEN_PREFIX = "pairing:";
 const PAIRING_RESULT_PREFIX = "pairing-result:";
+const PASSKEY_CHALLENGE_PREFIX = "passkey-challenge:";
 const PAIRING_TTL_SECONDS = 300; // 5 minutes
+const PASSKEY_CHALLENGE_TTL_SECONDS = 120; // 2 minutes
 const ACCESS_TOKEN_EXPIRY = "1825d"; // ~5 years
 const REFRESH_TOKEN_EXPIRY_SECONDS = 5 * 365 * 24 * 60 * 60; // 5 years
 const BCRYPT_ROUNDS = 12;
@@ -31,6 +43,9 @@ interface TokenPairWithSessionId extends TokenPair {
 export class AuthService {
   private readonly jwtAccessSecret: string;
   private readonly jwtRefreshSecret: string;
+  private readonly rpName: string;
+  private readonly rpId: string;
+  private readonly rpOrigin: string;
 
   constructor(
     @Inject(REDIS) private readonly redis: RedisClient,
@@ -38,6 +53,9 @@ export class AuthService {
   ) {
     this.jwtAccessSecret = Deno.env.get("JWT_ACCESS_SECRET") ?? "";
     this.jwtRefreshSecret = Deno.env.get("JWT_REFRESH_SECRET") ?? "";
+    this.rpName = Deno.env.get("WEBAUTHN_RP_NAME") ?? "Ponte";
+    this.rpId = Deno.env.get("WEBAUTHN_RP_ID") ?? "localhost";
+    this.rpOrigin = Deno.env.get("WEBAUTHN_ORIGIN") ?? "http://localhost:5173";
 
     if (!this.jwtAccessSecret || !this.jwtRefreshSecret) {
       logger.warn("JWT secrets not configured — auth will fail at runtime");
@@ -231,6 +249,163 @@ export class AuthService {
     } catch {
       throw new UnauthorizedException("Invalid or expired access token");
     }
+  }
+
+  // ─── Passkey Registration ─────────────────────────────────────────────────
+
+  async generatePasskeyRegistrationOptions(userId: string): Promise<{
+    options: Awaited<ReturnType<typeof generateRegistrationOptions>>;
+  }> {
+    const existingPasskeys = await this.authRepository.findPasskeysByUserId(userId);
+
+    const options = await generateRegistrationOptions({
+      rpName: this.rpName,
+      rpID: this.rpId,
+      userName: userId,
+      userID: new TextEncoder().encode(userId),
+      attestationType: "none",
+      excludeCredentials: existingPasskeys.map((pk) => ({
+        id: pk.credentialId,
+        transports: (pk.transports as string[] | null) ?? undefined,
+      })),
+      authenticatorSelection: {
+        residentKey: "preferred",
+        userVerification: "preferred",
+      },
+    });
+
+    // Store challenge in Redis for verification
+    const challengeKey = `${PASSKEY_CHALLENGE_PREFIX}reg:${userId}`;
+    await this.redis.set(challengeKey, options.challenge, "EX", PASSKEY_CHALLENGE_TTL_SECONDS);
+
+    return { options };
+  }
+
+  async verifyPasskeyRegistration(
+    userId: string,
+    response: RegistrationResponseJSON,
+  ): Promise<{ verified: boolean }> {
+    const challengeKey = `${PASSKEY_CHALLENGE_PREFIX}reg:${userId}`;
+    const expectedChallenge = await this.redis.get(challengeKey);
+    if (!expectedChallenge) {
+      throw new BadRequestException("Challenge expired or not found");
+    }
+    await this.redis.del(challengeKey);
+
+    const verification = await verifyRegistrationResponse({
+      response,
+      expectedChallenge,
+      expectedOrigin: this.rpOrigin,
+      expectedRPID: this.rpId,
+    });
+
+    if (!verification.verified || !verification.registrationInfo) {
+      throw new BadRequestException("Passkey verification failed");
+    }
+
+    const { credential } = verification.registrationInfo;
+
+    await this.authRepository.createPasskey({
+      userId,
+      credentialId: credential.id,
+      publicKey: Buffer.from(credential.publicKey).toString("base64url"),
+      counter: credential.counter,
+      transports: response.response.transports,
+    });
+
+    logger.info({ userId }, "Passkey registered");
+    return { verified: true };
+  }
+
+  // ─── Passkey Authentication ─────────────────────────────────────────────────
+
+  async generatePasskeyAuthenticationOptions(): Promise<{
+    options: Awaited<ReturnType<typeof generateAuthenticationOptions>>;
+  }> {
+    const options = await generateAuthenticationOptions({
+      rpID: this.rpId,
+      userVerification: "preferred",
+    });
+
+    // Store challenge keyed by itself (no userId yet)
+    const challengeKey = `${PASSKEY_CHALLENGE_PREFIX}auth:${options.challenge}`;
+    await this.redis.set(challengeKey, "1", "EX", PASSKEY_CHALLENGE_TTL_SECONDS);
+
+    return { options };
+  }
+
+  async verifyPasskeyAuthentication(
+    response: AuthenticationResponseJSON,
+  ): Promise<TokenPair> {
+    const passkey = await this.authRepository.findPasskeyByCredentialId(response.id);
+    if (!passkey) {
+      throw new UnauthorizedException("Unknown passkey");
+    }
+
+    const challengeKey = `${PASSKEY_CHALLENGE_PREFIX}auth:${response.response.clientDataJSON}`;
+    // We need the raw challenge from the response, so let's look it up differently.
+    // The challenge was stored by its value; we need to extract it from clientDataJSON.
+    // SimpleWebAuthn handles this internally — we just need to confirm it existed.
+
+    // Reconstruct the challenge from clientDataJSON
+    const clientDataB64 = response.response.clientDataJSON;
+    const clientDataJson = JSON.parse(
+      new TextDecoder().decode(
+        Uint8Array.from(atob(clientDataB64.replace(/-/g, "+").replace(/_/g, "/")), (c) => c.charCodeAt(0)),
+      ),
+    );
+    const challenge = clientDataJson.challenge;
+
+    const storedChallengeKey = `${PASSKEY_CHALLENGE_PREFIX}auth:${challenge}`;
+    const exists = await this.redis.get(storedChallengeKey);
+    if (!exists) {
+      throw new UnauthorizedException("Challenge expired or not found");
+    }
+    await this.redis.del(storedChallengeKey);
+
+    const publicKeyBytes = Uint8Array.from(
+      atob(passkey.publicKey.replace(/-/g, "+").replace(/_/g, "/")),
+      (c) => c.charCodeAt(0),
+    );
+
+    const verification = await verifyAuthenticationResponse({
+      response,
+      expectedChallenge: challenge,
+      expectedOrigin: this.rpOrigin,
+      expectedRPID: this.rpId,
+      credential: {
+        id: passkey.credentialId,
+        publicKey: publicKeyBytes,
+        counter: passkey.counter,
+        transports: (passkey.transports as string[] | null) as
+          | AuthenticationResponseJSON["response"]["transports"]
+          | undefined,
+      },
+    });
+
+    if (!verification.verified) {
+      throw new UnauthorizedException("Passkey authentication failed");
+    }
+
+    // Update counter
+    await this.authRepository.updatePasskeyCounter(
+      passkey.credentialId,
+      verification.authenticationInfo.newCounter,
+    );
+
+    // Create a new web session for this user
+    const sessionResult = await this.createSessionWithTokens({
+      userId: passkey.userId,
+      deviceId: null,
+      deviceType: "ios", // web client uses "ios" type
+    });
+
+    logger.info({ userId: passkey.userId }, "Passkey authentication successful");
+
+    return {
+      accessToken: sessionResult.accessToken,
+      refreshToken: sessionResult.refreshToken,
+    };
   }
 
   // ─── Private Helpers ───────────────────────────────────────────────────────

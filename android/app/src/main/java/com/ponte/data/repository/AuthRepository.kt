@@ -1,5 +1,6 @@
 package com.ponte.data.repository
 
+import com.ponte.data.local.db.dao.OutboxDao
 import com.ponte.data.local.db.dao.SyncStateDao
 import com.ponte.data.local.prefs.SecurePrefs
 import com.ponte.data.remote.api.AuthApi
@@ -15,7 +16,8 @@ import javax.inject.Singleton
 class AuthRepository @Inject constructor(
     private val authApi: AuthApi,
     private val securePrefs: SecurePrefs,
-    private val syncStateDao: SyncStateDao
+    private val syncStateDao: SyncStateDao,
+    private val outboxDao: OutboxDao
 ) : IAuthRepository {
 
     override suspend fun pair(pairingToken: String, deviceInfo: DeviceInfo): Result<Unit> =
@@ -33,8 +35,9 @@ class AuthRepository @Inject constructor(
             securePrefs.refreshToken = response.data.refreshToken
             securePrefs.deviceSecret = response.data.deviceSecret
             securePrefs.deviceId = response.data.deviceId
-            // Reset sync state so full re-sync happens with new device_id
+            // Reset sync state and outbox so full re-sync happens with new device_id
             syncStateDao.deleteAll()
+            outboxDao.deleteAll()
         }
 
     override suspend fun refreshTokens(): Result<Unit> = runCatching {
@@ -48,6 +51,7 @@ class AuthRepository @Inject constructor(
     override suspend fun logout() {
         securePrefs.clear()
         syncStateDao.deleteAll()
+        outboxDao.deleteAll()
     }
 
     override fun isPaired(): Boolean = securePrefs.isPaired

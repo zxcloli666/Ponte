@@ -12,6 +12,7 @@ import { Layout } from "./layout";
 
 /** Lazy-loaded screens for code splitting */
 const PairingScreen = lazy(() => import("@/features/auth/PairingScreen"));
+const LoginScreen = lazy(() => import("@/features/auth/LoginScreen"));
 const ConversationsScreen = lazy(() => import("@/features/sms/ConversationsScreen"));
 const ChatScreen = lazy(() => import("@/features/sms/ChatScreen"));
 const CallLogScreen = lazy(() => import("@/features/calls/CallLogScreen"));
@@ -45,10 +46,10 @@ function withSuspense(Component: React.ComponentType) {
   );
 }
 
-/** Redirects to /pair if not authenticated */
+/** Redirects to /login if not authenticated */
 function RequireAuth() {
   const token = useAuthStore((s) => s.accessToken);
-  if (!token) return <Navigate to="/pair" replace />;
+  if (!token) return <Navigate to="/login" replace />;
   return <Outlet />;
 }
 
@@ -193,6 +194,10 @@ export const routes: RouteObject[] = [
           {
             path: "/pair",
             element: withSuspense(PairingScreen),
+          },
+          {
+            path: "/login",
+            element: withSuspense(LoginScreen),
           },
         ],
       },

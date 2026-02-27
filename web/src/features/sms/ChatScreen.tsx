@@ -238,7 +238,7 @@ export default function ChatScreen() {
           >
             <input
               type="text"
-              placeholder="\u0421\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0435"
+              placeholder="Сообщение"
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               onKeyDown={handleKey}

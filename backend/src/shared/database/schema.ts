@@ -7,6 +7,7 @@ import {
   boolean,
   timestamp,
   jsonb,
+  unique,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
@@ -191,7 +192,9 @@ export const contacts = pgTable("contacts", {
   deletedAt: timestamp("deleted_at", { withTimezone: true }),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-});
+}, (t) => [
+  unique("contacts_device_android_unique").on(t.deviceId, t.androidId),
+]);
 
 export const contactsRelations = relations(contacts, ({ one, many }) => ({
   device: one(devices, { fields: [contacts.deviceId], references: [devices.id] }),
@@ -214,6 +217,18 @@ export const sessions = pgTable("sessions", {
 export const sessionsRelations = relations(sessions, ({ one }) => ({
   device: one(devices, { fields: [sessions.deviceId], references: [devices.id] }),
 }));
+
+// ─── Passkeys ──────────────────────────────────────────────────────────────
+
+export const passkeys = pgTable("passkeys", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: uuid("user_id").notNull(),
+  credentialId: text("credential_id").notNull().unique(),
+  publicKey: text("public_key").notNull(),
+  counter: integer("counter").notNull().default(0),
+  transports: jsonb("transports").$type<string[]>(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
 
 // ─── Delivery Receipts ──────────────────────────────────────────────────────
 

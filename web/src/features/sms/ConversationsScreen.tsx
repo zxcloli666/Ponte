@@ -57,13 +57,9 @@ export default function ConversationsScreen() {
 
   return (
     <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
-      <Header title="\u0421\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u044f" largeTitle>
+      <Header title="Сообщения" largeTitle>
         <div style={{ padding: "0 var(--space-md) var(--space-sm)" }}>
-          <SearchBar
-            value={search}
-            onChange={setSearch}
-            placeholder="\u041f\u043e\u0438\u0441\u043a"
-          />
+          <SearchBar value={search} onChange={setSearch} placeholder="Поиск" />
         </div>
       </Header>
       <PullToRefresh onRefresh={handleRefresh}>
@@ -86,16 +82,8 @@ export default function ConversationsScreen() {
                 <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
               </svg>
             }
-            title={
-              search
-                ? "\u041d\u0438\u0447\u0435\u0433\u043e \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e"
-                : "\u041d\u0435\u0442 \u0441\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0439"
-            }
-            description={
-              search
-                ? "\u041f\u043e\u043f\u0440\u043e\u0431\u0443\u0439\u0442\u0435 \u0434\u0440\u0443\u0433\u043e\u0439 \u0437\u0430\u043f\u0440\u043e\u0441"
-                : "\u0421\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u044f \u043f\u043e\u044f\u0432\u044f\u0442\u0441\u044f \u0437\u0434\u0435\u0441\u044c"
-            }
+            title={search ? "Ничего не найдено" : "Нет сообщений"}
+            description={search ? "Попробуйте другой запрос" : "Сообщения появятся здесь"}
           />
         ) : (
           <div style={{ padding: "0 var(--space-sm)" }}>

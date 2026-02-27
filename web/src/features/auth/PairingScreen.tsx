@@ -4,12 +4,16 @@ import { AnimatePresence, motion } from "framer-motion";
 import { QRCodeSVG } from "qrcode.react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { checkPairingStatus, fetchQrToken } from "./api";
+import { isPasskeySupported, registerPasskey } from "./passkey";
 import { useAuthStore } from "./store";
 
 export default function PairingScreen() {
   const [qrValue, setQrValue] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [showPasskeyPrompt, setShowPasskeyPrompt] = useState(false);
+  const [passkeyRegistering, setPasskeyRegistering] = useState(false);
+  const pendingTokensRef = useRef<{ accessToken: string; refreshToken: string } | null>(null);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const setTokens = useAuthStore((s) => s.setTokens);
@@ -34,10 +38,18 @@ export default function PairingScreen() {
             if (pollRef.current) clearInterval(pollRef.current);
             setIsSuccess(true);
             if (status.deviceName) setDeviceName(status.deviceName);
-            setTimeout(
-              () => setTokens(status.accessToken as string, status.refreshToken as string),
-              1200,
-            );
+
+            // Store tokens temporarily — we need them for passkey registration
+            const tokens = { accessToken: status.accessToken, refreshToken: status.refreshToken };
+            pendingTokensRef.current = tokens;
+
+            // Set tokens now so the API client is authenticated for passkey registration
+            setTokens(tokens.accessToken, tokens.refreshToken);
+
+            // After success animation, show passkey prompt if supported
+            if (isPasskeySupported()) {
+              setTimeout(() => setShowPasskeyPrompt(true), 1200);
+            }
           }
           // biome-ignore lint/suspicious/noExplicitAny: error handler
         } catch (e: any) {
@@ -122,46 +134,151 @@ export default function PairingScreen() {
 
       <AnimatePresence mode="wait">
         {isSuccess ? (
-          <motion.div
-            key="success"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "var(--space-lg)",
-            }}
-          >
+          showPasskeyPrompt ? (
             <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: "spring", stiffness: 400, damping: 15 }}
+              key="passkey-prompt"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.4 }}
               style={{
-                width: 80,
-                height: 80,
-                borderRadius: "50%",
-                background: "var(--color-success)",
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
-                justifyContent: "center",
-                fontSize: 40,
-                color: "#fff",
-                boxShadow: "0 0 30px rgba(52, 199, 89, 0.5)",
+                gap: "var(--space-xl)",
+                width: "100%",
+                maxWidth: 360,
               }}
             >
-              {"\u2713"}
+              <Glass
+                variant="card"
+                style={{
+                  padding: "var(--space-xl)",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "var(--space-lg)",
+                  width: "100%",
+                  textAlign: "center",
+                }}
+              >
+                <div
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: "50%",
+                    background: "var(--gradient-accent)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 28,
+                  }}
+                >
+                  {"\uD83D\uDD11"}
+                </div>
+                <h2 style={{ color: "#fff", fontSize: 20, fontWeight: 600, margin: 0 }}>
+                  Сохранить ключ доступа?
+                </h2>
+                <p
+                  style={{
+                    fontSize: "var(--font-size-subheadline)",
+                    color: "var(--color-text-secondary)",
+                    lineHeight: "var(--line-height-relaxed)",
+                    margin: 0,
+                  }}
+                >
+                  Вы сможете войти в Ponte из любого браузера или режима инкогнито без повторного
+                  сканирования QR-кода
+                </p>
+                <div style={{ display: "flex", gap: "var(--space-md)", width: "100%" }}>
+                  <motion.button
+                    type="button"
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setShowPasskeyPrompt(false)}
+                    style={{
+                      flex: 1,
+                      padding: "12px",
+                      borderRadius: "var(--radius-full)",
+                      background: "rgba(255, 255, 255, 0.1)",
+                      color: "rgba(255, 255, 255, 0.7)",
+                      fontSize: "var(--font-size-body)",
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      border: "none",
+                    }}
+                  >
+                    Пропустить
+                  </motion.button>
+                  <motion.button
+                    type="button"
+                    whileTap={{ scale: 0.95 }}
+                    disabled={passkeyRegistering}
+                    onClick={async () => {
+                      setPasskeyRegistering(true);
+                      await registerPasskey();
+                      setPasskeyRegistering(false);
+                      setShowPasskeyPrompt(false);
+                    }}
+                    style={{
+                      flex: 1,
+                      padding: "12px",
+                      borderRadius: "var(--radius-full)",
+                      background: "var(--gradient-accent)",
+                      color: "#fff",
+                      fontSize: "var(--font-size-body)",
+                      fontWeight: 600,
+                      cursor: passkeyRegistering ? "wait" : "pointer",
+                      border: "none",
+                      opacity: passkeyRegistering ? 0.7 : 1,
+                    }}
+                  >
+                    {passkeyRegistering ? "Создание..." : "Создать ключ"}
+                  </motion.button>
+                </div>
+              </Glass>
             </motion.div>
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              style={{ color: "#fff", fontSize: 24, fontWeight: 600, textAlign: "center" }}
+          ) : (
+            <motion.div
+              key="success"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "var(--space-lg)",
+              }}
             >
-              Подключено!
-            </motion.p>
-          </motion.div>
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.2, type: "spring", stiffness: 400, damping: 15 }}
+                style={{
+                  width: 80,
+                  height: 80,
+                  borderRadius: "50%",
+                  background: "var(--color-success)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 40,
+                  color: "#fff",
+                  boxShadow: "0 0 30px rgba(52, 199, 89, 0.5)",
+                }}
+              >
+                {"\u2713"}
+              </motion.div>
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                style={{ color: "#fff", fontSize: 24, fontWeight: 600, textAlign: "center" }}
+              >
+                Подключено!
+              </motion.p>
+            </motion.div>
+          )
         ) : (
           <motion.div
             key="pairing"

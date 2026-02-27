@@ -41,6 +41,9 @@ interface OutboxDao {
     @Query("DELETE FROM outbox_messages WHERE status = 'acked'")
     suspend fun deleteAcked()
 
+    @Query("DELETE FROM outbox_messages")
+    suspend fun deleteAll()
+
     @Query("SELECT COUNT(*) FROM outbox_messages WHERE status = 'pending'")
     fun observePendingCount(): Flow<Int>
 

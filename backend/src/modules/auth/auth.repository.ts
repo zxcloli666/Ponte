@@ -1,7 +1,7 @@
 import { Injectable, Inject } from "@nestjs/common";
 import { eq } from "drizzle-orm";
 import { DRIZZLE, type DrizzleDB } from "../../shared/database/database.module.ts";
-import { devices, sessions } from "../../shared/database/schema.ts";
+import { devices, sessions, passkeys } from "../../shared/database/schema.ts";
 
 export interface CreateDeviceParams {
   id: string;
@@ -97,5 +97,52 @@ export class AuthRepository {
       .delete(sessions)
       .where(eq(sessions.userId, userId))
       .returning();
+  }
+
+  // ─── Passkeys ───────────────────────────────────────────────────────────────
+
+  async createPasskey(params: {
+    userId: string;
+    credentialId: string;
+    publicKey: string;
+    counter: number;
+    transports?: string[];
+  }) {
+    const [passkey] = await this.db
+      .insert(passkeys)
+      .values({
+        userId: params.userId,
+        credentialId: params.credentialId,
+        publicKey: params.publicKey,
+        counter: params.counter,
+        transports: params.transports ?? null,
+      })
+      .returning();
+    return passkey;
+  }
+
+  async findPasskeyByCredentialId(credentialId: string) {
+    const [passkey] = await this.db
+      .select()
+      .from(passkeys)
+      .where(eq(passkeys.credentialId, credentialId))
+      .limit(1);
+    return passkey ?? null;
+  }
+
+  async findPasskeysByUserId(userId: string) {
+    return this.db
+      .select()
+      .from(passkeys)
+      .where(eq(passkeys.userId, userId));
+  }
+
+  async updatePasskeyCounter(credentialId: string, counter: number) {
+    const [updated] = await this.db
+      .update(passkeys)
+      .set({ counter })
+      .where(eq(passkeys.credentialId, credentialId))
+      .returning();
+    return updated ?? null;
   }
 }

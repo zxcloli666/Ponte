@@ -47,7 +47,6 @@ class SyncForegroundService : Service() {
     @Inject lateinit var simDao: com.ponte.data.local.db.dao.SimDao
 
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-    private var initialSyncDone = false
 
     override fun onCreate() {
         super.onCreate()
@@ -88,10 +87,7 @@ class SyncForegroundService : Service() {
             wsClient.events.collect { event ->
                 when (event) {
                     is WsEvent.Connected -> {
-                        if (!initialSyncDone) {
-                            runInitialSync()
-                            initialSyncDone = true
-                        }
+                        runInitialSync()
                         processOutboxUseCase()
                     }
                     is WsEvent.Ack -> handleAck(event)

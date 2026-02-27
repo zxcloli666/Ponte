@@ -8,6 +8,7 @@ import {
   UseGuards,
   BadRequestException,
 } from "@nestjs/common";
+import { z } from "zod";
 import { AuthService } from "./auth.service.ts";
 import { JwtGuard, type JwtPayload } from "../../shared/guards/jwt.guard.ts";
 import {
@@ -57,5 +58,47 @@ export class AuthController {
   async logout(@Req() req: { user: JwtPayload & { sessionId: string } }) {
     await this.authService.logout(req.user.sessionId);
     return { message: "Logged out" };
+  }
+
+  // ─── Passkeys ───────────────────────────────────────────────────────────────
+
+  /** Generate passkey registration options (requires auth). */
+  @Post("passkey/register/options")
+  @UseGuards(JwtGuard)
+  generatePasskeyRegOptions(@Req() req: { user: JwtPayload }) {
+    return this.authService.generatePasskeyRegistrationOptions(req.user.sub);
+  }
+
+  /** Verify passkey registration response (requires auth). */
+  @Post("passkey/register/verify")
+  @UseGuards(JwtGuard)
+  verifyPasskeyRegistration(
+    @Req() req: { user: JwtPayload },
+    @Body() body: unknown,
+  ) {
+    const parsed = z.object({ response: z.any() }).safeParse(body);
+    if (!parsed.success) {
+      throw new BadRequestException("Invalid registration response");
+    }
+    return this.authService.verifyPasskeyRegistration(
+      req.user.sub,
+      parsed.data.response,
+    );
+  }
+
+  /** Generate passkey authentication options (no auth required). */
+  @Post("passkey/authenticate/options")
+  generatePasskeyAuthOptions() {
+    return this.authService.generatePasskeyAuthenticationOptions();
+  }
+
+  /** Verify passkey authentication response (no auth required). */
+  @Post("passkey/authenticate/verify")
+  verifyPasskeyAuthentication(@Body() body: unknown) {
+    const parsed = z.object({ response: z.any() }).safeParse(body);
+    if (!parsed.success) {
+      throw new BadRequestException("Invalid authentication response");
+    }
+    return this.authService.verifyPasskeyAuthentication(parsed.data.response);
   }
 }
