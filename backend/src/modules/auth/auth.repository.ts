@@ -130,7 +130,7 @@ export class AuthRepository {
     return passkey ?? null;
   }
 
-  async findPasskeysByUserId(userId: string) {
+  findPasskeysByUserId(userId: string) {
     return this.db
       .select()
       .from(passkeys)

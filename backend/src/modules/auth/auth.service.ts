@@ -345,12 +345,7 @@ export class AuthService {
       throw new UnauthorizedException("Unknown passkey");
     }
 
-    const challengeKey = `${PASSKEY_CHALLENGE_PREFIX}auth:${response.response.clientDataJSON}`;
-    // We need the raw challenge from the response, so let's look it up differently.
-    // The challenge was stored by its value; we need to extract it from clientDataJSON.
-    // SimpleWebAuthn handles this internally — we just need to confirm it existed.
-
-    // Reconstruct the challenge from clientDataJSON
+    // Reconstruct the challenge from clientDataJSON to look up in Redis
     const clientDataB64 = response.response.clientDataJSON;
     const clientDataJson = JSON.parse(
       new TextDecoder().decode(
