@@ -63,12 +63,12 @@ export class AuthService {
   }> {
     const key = `${PAIRING_TOKEN_PREFIX}${dto.pairingToken}`;
 
-    // Validate and consume the pairing token atomically
+    // Validate and mark the pairing token as consumed (keep it so polling sees "paired" state)
     const tokenValue = await this.redis.get(key);
-    if (!tokenValue) {
+    if (!tokenValue || tokenValue === "paired") {
       throw new BadRequestException("Invalid or expired pairing token");
     }
-    await this.redis.del(key);
+    await this.redis.set(key, "paired", "EX", PAIRING_TTL_SECONDS);
 
     // Generate userId for this paired session
     const userId = uuidv4();
@@ -146,10 +146,10 @@ export class AuthService {
       return { status: "connected", ...parsed };
     }
 
-    // Check if pairing token still exists (pending)
+    // Check if pairing token still exists (pending or being processed)
     const tokenKey = `${PAIRING_TOKEN_PREFIX}${pairingToken}`;
-    const exists = await this.redis.exists(tokenKey);
-    if (exists) {
+    const tokenValue = await this.redis.get(tokenKey);
+    if (tokenValue) {
       return { status: "pending" };
     }
 
