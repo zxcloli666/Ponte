@@ -150,7 +150,7 @@ jobs:
 
   android-release:
     name: Android Release
-    needs: check-release
+    needs: [check-release, version]
     if: needs.check-release.outputs.should-release == 'true'
     runs-on: ubuntu-latest
     defaults:
@@ -166,29 +166,48 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
+      - name: Update version
+        env:
+          VERSION: ${{ needs.version.outputs.version }}
+        run: |
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+          VERSION_CODE=$(( MAJOR * 10000 + MINOR * 100 + PATCH ))
+          sed -i "s/versionCode = .*/versionCode = $VERSION_CODE/" app/build.gradle.kts
+          sed -i "s/versionName = .*/versionName = \"$VERSION\"/" app/build.gradle.kts
+
       - name: Build release APK
         run: ./gradlew assembleRelease
 
-      - name: Prepare APK
+      - name: Sign APK
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
         run: |
+          if [[ -z "$KEYSTORE_BASE64" ]]; then
+            echo "::error::Missing signing secrets. Set KEYSTORE_BASE64, KEY_ALIAS, KEY_PASSWORD, STORE_PASSWORD in repo secrets."
+            echo "Run ./scripts/android-generate-signing-key.sh to generate them."
+            exit 1
+          fi
+
           APK="app/build/outputs/apk/release/app-release-unsigned.apk"
           OUT="app/build/outputs/apk/release/ponte-release.apk"
-          if [[ -n "$KEYSTORE_BASE64" ]]; then
-            echo "$KEYSTORE_BASE64" | base64 -d > keystore.jks
-            "$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME/build-tools/" | tail -1)/apksigner" sign \
-              --ks keystore.jks \
-              --ks-key-alias "$KEY_ALIAS" \
-              --ks-pass "pass:$STORE_PASSWORD" \
-              --key-pass "pass:$KEY_PASSWORD" \
-              "$APK"
-            rm keystore.jks
-          fi
-          mv "$APK" "$OUT"
+
+          echo "$KEYSTORE_BASE64" | base64 -d > /tmp/keystore.jks
+
+          APKSIGNER="$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME/build-tools/" | sort -V | tail -1)/apksigner"
+
+          "$APKSIGNER" sign \
+            --ks /tmp/keystore.jks \
+            --ks-key-alias "$KEY_ALIAS" \
+            --ks-pass "pass:$STORE_PASSWORD" \
+            --key-pass "pass:$KEY_PASSWORD" \
+            --out "$OUT" \
+            "$APK"
+
+          "$APKSIGNER" verify "$OUT"
+          rm /tmp/keystore.jks
 
       - uses: actions/upload-artifact@v4
         with:
