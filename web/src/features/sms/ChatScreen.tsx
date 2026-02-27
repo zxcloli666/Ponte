@@ -51,6 +51,7 @@ export default function ChatScreen() {
     };
   }, [decoded, setMessages, setLoadingMessages, markRead]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: scroll on new messages
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;

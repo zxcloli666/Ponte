@@ -16,10 +16,7 @@ export default function PairingScreen() {
   const setPairingToken = useAuthStore((s) => s.setPairingToken);
   const setDeviceName = useAuthStore((s) => s.setDeviceName);
 
-  const restartPairing = useCallback(() => {
-    // небольшая пауза, чтобы UI успел отрисоваться
-    setTimeout(() => initPairing(), 500);
-  }, []);
+  const restartPairingRef = useRef<() => void>(() => {});
 
   const initPairing = useCallback(async () => {
     try {
@@ -54,12 +51,12 @@ export default function PairingScreen() {
                 // токен устарел – перезапускаем процесс паринга
                 if (pollRef.current) clearInterval(pollRef.current);
                 setError("Токен pairing expired, getting new…");
-                restartPairing();
+                restartPairingRef.current();
                 return;
               }
             } catch {
               if (pollRef.current) clearInterval(pollRef.current);
-              restartPairing();
+              restartPairingRef.current();
               return;
             }
           }
@@ -71,6 +68,10 @@ export default function PairingScreen() {
       setError("Не удалось получить код. Попробуйте снова.");
     }
   }, [setPairingToken, setTokens, setDeviceName]);
+
+  restartPairingRef.current = () => {
+    setTimeout(() => initPairing(), 500);
+  };
 
   useEffect(() => {
     initPairing();

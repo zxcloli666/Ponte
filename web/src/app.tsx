@@ -82,9 +82,7 @@ export function App() {
         {activeCall &&
           (activeCall.status === "active" ||
             activeCall.status === "connecting" ||
-            activeCall.status === "ringing") && (
-            <ActiveCallScreen />
-          )}
+            activeCall.status === "ringing") && <ActiveCallScreen />}
       </AnimatePresence>
     </ToastProvider>
   );
