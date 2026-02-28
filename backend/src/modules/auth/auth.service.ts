@@ -263,7 +263,7 @@ export class AuthService {
     const options = await generateRegistrationOptions({
       rpName: this.rpName,
       rpID: this.rpId,
-      userName: userId,
+      userName: "Ponte",
       userID: new TextEncoder().encode(userId),
       attestationType: "none",
       excludeCredentials: existingPasskeys.map((pk) => ({
