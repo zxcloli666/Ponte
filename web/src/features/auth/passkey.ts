@@ -38,9 +38,10 @@ export async function authenticateWithPasskey(): Promise<{
 } | null> {
   try {
     // 1. Get authentication options from server
-    const { options } = await api
-      .post("auth/passkey/authenticate/options")
-      .json<{ options: Parameters<typeof startAuthentication>[0]["optionsJSON"] }>();
+    const { options, challengeId } = await api.post("auth/passkey/authenticate/options").json<{
+      options: Parameters<typeof startAuthentication>[0]["optionsJSON"];
+      challengeId: string;
+    }>();
 
     // 2. Get assertion via browser WebAuthn API
     const authentication = await startAuthentication({ optionsJSON: options });
@@ -48,7 +49,7 @@ export async function authenticateWithPasskey(): Promise<{
     // 3. Verify with server, get tokens
     const result = await api
       .post("auth/passkey/authenticate/verify", {
-        json: { response: authentication },
+        json: { challengeId, response: authentication },
       })
       .json<{ accessToken: string; refreshToken: string }>();
 

@@ -88,17 +88,25 @@ export class AuthController {
 
   /** Generate passkey authentication options (no auth required). */
   @Post("passkey/authenticate/options")
-  generatePasskeyAuthOptions() {
-    return this.authService.generatePasskeyAuthenticationOptions();
+  generatePasskeyAuthOptions(@Req() req: { headers: { "user-agent"?: string } }) {
+    return this.authService.generatePasskeyAuthenticationOptions(
+      req.headers["user-agent"] ?? "unknown",
+    );
   }
 
   /** Verify passkey authentication response (no auth required). */
   @Post("passkey/authenticate/verify")
   verifyPasskeyAuthentication(@Body() body: unknown) {
-    const parsed = z.object({ response: z.any() }).safeParse(body);
+    const parsed = z.object({
+      challengeId: z.string().min(1),
+      response: z.any(),
+    }).safeParse(body);
     if (!parsed.success) {
       throw new BadRequestException("Invalid authentication response");
     }
-    return this.authService.verifyPasskeyAuthentication(parsed.data.response);
+    return this.authService.verifyPasskeyAuthentication(
+      parsed.data.challengeId,
+      parsed.data.response,
+    );
   }
 }

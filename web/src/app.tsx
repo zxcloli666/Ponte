@@ -10,6 +10,7 @@ import { registerNotificationHandlers } from "@/features/notifications/ws";
 import { registerSmsHandlers } from "@/features/sms/ws";
 import { router } from "@/router";
 import { connectSocket, disconnectSocket } from "@/shared/api/ws";
+import { usePushNotifications } from "@/shared/hooks/usePushNotifications";
 import { ToastProvider } from "@/shared/ui/Toast";
 import { AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
@@ -22,6 +23,13 @@ import { RouterProvider } from "react-router";
 export function App() {
   const accessToken = useAuthStore((s) => s.accessToken);
   const activeCall = useCallsStore((s) => s.activeCall);
+  const { subscribe: subscribePush } = usePushNotifications();
+
+  // Request push notification permission when authenticated
+  useEffect(() => {
+    if (!accessToken) return;
+    subscribePush();
+  }, [accessToken, subscribePush]);
 
   // Connect WebSocket when authenticated
   useEffect(() => {

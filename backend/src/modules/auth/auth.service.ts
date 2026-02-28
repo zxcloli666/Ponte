@@ -322,22 +322,26 @@ export class AuthService {
 
   // ─── Passkey Authentication ─────────────────────────────────────────────────
 
-  async generatePasskeyAuthenticationOptions(): Promise<{
+  async generatePasskeyAuthenticationOptions(userAgent: string): Promise<{
     options: Awaited<ReturnType<typeof generateAuthenticationOptions>>;
+    challengeId: string;
   }> {
     const options = await generateAuthenticationOptions({
       rpID: this.rpId,
       userVerification: "preferred",
     });
 
-    // Store challenge keyed by itself (no userId yet)
-    const challengeKey = `${PASSKEY_CHALLENGE_PREFIX}auth:${options.challenge}`;
-    await this.redis.set(challengeKey, "1", "EX", PASSKEY_CHALLENGE_TTL_SECONDS);
+    // Key = device hint + timestamp, challenge stored as value
+    const deviceHint = userAgent.slice(0, 50).replace(/[^a-zA-Z0-9]/g, "_");
+    const challengeId = `${deviceHint}_${Date.now()}`;
+    const challengeKey = `${PASSKEY_CHALLENGE_PREFIX}auth:${challengeId}`;
+    await this.redis.set(challengeKey, options.challenge, "EX", PASSKEY_CHALLENGE_TTL_SECONDS);
 
-    return { options };
+    return { options, challengeId };
   }
 
   async verifyPasskeyAuthentication(
+    challengeId: string,
     response: AuthenticationResponseJSON,
   ): Promise<TokenPair> {
     const passkey = await this.authRepository.findPasskeyByCredentialId(response.id);
@@ -345,21 +349,13 @@ export class AuthService {
       throw new UnauthorizedException("Unknown passkey");
     }
 
-    // Reconstruct the challenge from clientDataJSON to look up in Redis
-    const clientDataB64 = response.response.clientDataJSON;
-    const clientDataJson = JSON.parse(
-      new TextDecoder().decode(
-        Uint8Array.from(atob(clientDataB64.replace(/-/g, "+").replace(/_/g, "/")), (c) => c.charCodeAt(0)),
-      ),
-    );
-    const challenge = clientDataJson.challenge;
-
-    const storedChallengeKey = `${PASSKEY_CHALLENGE_PREFIX}auth:${challenge}`;
-    const exists = await this.redis.get(storedChallengeKey);
-    if (!exists) {
+    // Look up challenge by ID
+    const challengeKey = `${PASSKEY_CHALLENGE_PREFIX}auth:${challengeId}`;
+    const expectedChallenge = await this.redis.get(challengeKey);
+    if (!expectedChallenge) {
       throw new UnauthorizedException("Challenge expired or not found");
     }
-    await this.redis.del(storedChallengeKey);
+    await this.redis.del(challengeKey);
 
     const publicKeyBytes = Uint8Array.from(
       atob(passkey.publicKey.replace(/-/g, "+").replace(/_/g, "/")),
@@ -368,7 +364,7 @@ export class AuthService {
 
     const verification = await verifyAuthenticationResponse({
       response,
-      expectedChallenge: challenge,
+      expectedChallenge: expectedChallenge,
       expectedOrigin: this.rpOrigin,
       expectedRPID: this.rpId,
       credential: {

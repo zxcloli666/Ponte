@@ -21,6 +21,7 @@ const ActiveCallScreen = lazy(() => import("@/features/calls/ActiveCallScreen"))
 const NotificationsScreen = lazy(() => import("@/features/notifications/NotificationsScreen"));
 const ContactsScreen = lazy(() => import("@/features/contacts/ContactsScreen"));
 const ContactDetailScreen = lazy(() => import("@/features/contacts/ContactDetailScreen"));
+const SettingsScreen = lazy(() => import("@/features/settings/SettingsScreen"));
 
 function SuspenseFallback() {
   return (
@@ -242,6 +243,10 @@ export const routes: RouteObject[] = [
               {
                 path: "contacts/:contactId",
                 element: withSuspense(ContactDetailScreen),
+              },
+              {
+                path: "settings",
+                element: withSuspense(SettingsScreen),
               },
             ],
           },
